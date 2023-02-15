@@ -1,18 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        
-        <p>
-         toi ten la tao
-        </p>
-        
-          Learn React
-        
-      </header>
-    </div>
-  );
+  return <Layout/>
 }
 
 export default App;
