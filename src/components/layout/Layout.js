@@ -1,25 +1,19 @@
 import React from "react";
 import Routers from "../../routers/Routers";
 import Header from "../header/Header";
-import Footer from "../footer/Footer";
 import SideBar from "../sideBar/SideBar";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-const { Content } = Layout;
+import { Layout } from "antd";
 
 const MyLayout = () => {
-    return (
-        <>
-            <Header />
-            <Layout
-                
-            >
-                <SideBar>
-                    <Routers />
-                </SideBar>
-            </Layout>
-
-        </>
-    );
+   return (
+      <>
+         <Header />
+         <Layout>
+            <SideBar />
+            <Routers />
+         </Layout>
+      </>
+   );
 };
 
 export default MyLayout;
