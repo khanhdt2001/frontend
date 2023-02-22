@@ -1,0 +1,30 @@
+.market__list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    list-style-type: none;
+    margin-right: 35px;
+    margin-top: 30px;
+}
+.market__item {
+    margin-bottom: 20px;
+}
+.market__item .market_li_card :only-child {
+    display: flex;
+    align-items: center;
+}
+.market_li_card .market_li_description {
+    flex-direction: column;
+    height: 60px;
+    justify-content: space-between;
+}
+.market_li_description p span {
+    margin-left: 6px;
+}
+.market_description_content {
+    width: 400px;
+    justify-content: space-between;
+}
+.market_li_btn {
+    margin-left: auto;
+}
