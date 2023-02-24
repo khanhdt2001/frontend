@@ -1,0 +1,7 @@
+.request-information {
+    display: flex;
+    margin-bottom: 12px;
+}
+.request-information p {
+    margin-left: 12px;
+}
