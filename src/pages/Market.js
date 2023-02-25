@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Network, Alchemy } from "alchemy-sdk";
-import { Avatar, Card,Button, Row, Col } from "antd";
-import {
-    DollarCircleOutlined,
-    CheckCircleOutlined,
-} from "@ant-design/icons";
-import { nftData } from "../data/nft.data";
-import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest"
+import { Avatar, Card, Button, Row, Col } from "antd";
+import { DollarCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
+
+import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest";
 import "./css/Market.css";
 const settings = {
     apiKey: "-C7_ur_4s6R0oUnBNGi4qB3XWfv-HsFR",
@@ -21,34 +19,43 @@ const Market = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
-    const [currentNftAddress, setCurrentNftAddress] = useState("")
-    const showModal = (address) => {
+    const [currentNftAddress, setCurrentNftAddress] = useState("");
+    const [currentLocalAddress, setCurrentLocalAddress] = useState("");
+    const showModal = (address, localAddress) => {
         setIsModalOpen(true);
         setCurrentNftAddress(address);
-
-    };
-
-    const hanleSubmit = async () => {
-        setModalLoading(true)
-
+        setCurrentLocalAddress(localAddress);
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
-        setModalLoading(false)
-
+        setModalLoading(false);
     };
     useEffect(() => {
-        const GetContractMetadata = async () => {
-            // var res = [];
-            const data = await Promise.all(nftData.map(nft => alchemy.nft.getContractMetadata(
-                nft.webAddress
-            ))) || [];
-            SetNFTInfo(data);
-            SetIsLoading(false);
+        const GetNftLocal = async () => {
+            await axios.get("http://192.168.1.59:5000/nfts").then(
+                async (response) => {
+                    const dataLocal = response.data.nfts;
+                    const data =
+                        (await Promise.all(
+                            dataLocal.map((nft) =>
+                                alchemy.nft.getContractMetadata(nft.webAddress)
+                            )
+                        )) || [];
+                    for (let i = 0; i < data.length; i++) {
+                        data[i].localAddress = dataLocal[i].localAddress
+                    }
+                    SetNFTInfo(data);
+                    SetIsLoading(false);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
         };
         if (isLoading) {
-            GetContractMetadata();
+            GetNftLocal();
+            
         }
     }, [isLoading]);
     return (
@@ -99,7 +106,7 @@ const Market = () => {
                             type="primary"
                             className="market_li_btn"
                             onClick={() => {
-                                showModal(nftData?.address)
+                                showModal(nftData?.address, nftData?.localAddress);
                             }}
                         >
                             <DollarCircleOutlined />
@@ -108,8 +115,15 @@ const Market = () => {
                     </Card>
                 </li>
             ))}
-            <MyModalMakeRequest data={{isModalOpen, setIsModalOpen, handleCancel, currentNftAddress}}>
-            </MyModalMakeRequest>
+            <MyModalMakeRequest
+                data={{
+                    isModalOpen,
+                    setIsModalOpen,
+                    handleCancel,
+                    currentNftAddress,
+                    currentLocalAddress,
+                }}
+            ></MyModalMakeRequest>
         </ul>
     );
 };

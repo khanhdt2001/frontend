@@ -1,65 +1,85 @@
-import React, {useEffect, useState} from 'react'
-import {Modal, Image, Input, Button} from "antd";
-import {KeyOutlined} from "@ant-design/icons";
-import { alchemy, convertIpfs, vendorMakeRequest } from "../../function/Function";
+import React, { useEffect, useState } from "react";
+import { Modal, Image, Input, Button } from "antd";
+import { KeyOutlined } from "@ant-design/icons";
+import {
+    alchemy,
+    convertIpfs,
+    vendorMakeRequest,
+} from "../../function/Function";
 import { AddressContext } from "../../context/MyContext";
-import "./MyModalMakeRequest.css"
+import "./MyModalMakeRequest.css";
 
 const MyModalMakeRequest = (props) => {
-    const {isModalOpen, setIsModalOpen, handleCancel, currentNftAddress} = props.data;
-    const [message, setMessage] = useState("")
+    const {
+        isModalOpen,
+        setIsModalOpen,
+        handleCancel,
+        currentNftAddress,
+        currentLocalAddress,
+    } = props.data;
+    const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState({})
-    const [tokenId, setTokenId] = useState(0)
-    const [imageLink, setImageLink] = useState("error")
+    const [tokenId, setTokenId] = useState(0);
+    const [imageLink, setImageLink] = useState("error");
+    const [disableSubmit, setDisableSubmit] = useState(false);
     const { currentAddress } = React.useContext(AddressContext);
     const myModalClose = () => {
-        handleCancel()
-        setLoading(false)
-        setTokenId(null)
-        setImageLink("error")
-        setMessage("")
-
-    }
+        handleCancel();
+        setLoading(false);
+        setTokenId(null);
+        setImageLink("error");
+        setMessage("");
+        setDisableSubmit(false)
+    };
     const onConfirm = async () => {
-        setLoading(true)
-        
+        setLoading(true);
+
         try {
-            const response = await vendorMakeRequest("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", tokenId, currentAddress)
+            const response = await vendorMakeRequest(
+                currentLocalAddress,
+                tokenId,
+                currentAddress
+            );
             const res = await alchemy.nft.getNftMetadata(
                 currentNftAddress,
-                tokenId)
-            setData(res)
-            setImageLink(convertIpfs(res?.rawMetadata.image))
+                tokenId
+            );
+            setImageLink(convertIpfs(res?.rawMetadata.image));
+            setLoading(false);
+            setDisableSubmit(true)
+            
+            setMessage(`Tnx success with tnx hash: ${response?.transactionHash}`);
             console.log(response);
         } catch (error) {
-            setMessage("Invalid tokenId")
-            setLoading(false)
-            return
+            setMessage("Invalid tokenId");
+            setLoading(false);
+            return;
         }
-
-
-       
-    }
-    const onChange =  (e) => {
-        setTokenId(e.target.value)
-        
-    }
+    };
+    const onChange = (e) => {
+        setTokenId(e.target.value);
+    };
 
     return (
         <Modal
-               title="Make request"
-               open={isModalOpen||false}
-               onCancel={myModalClose}
-               footer={[
-                   <Button key="back" onClick={myModalClose}>
-                       Cancel
-                   </Button>,
-                   <Button key="submit" type="primary" loading={loading} onClick={onConfirm}>
-                       Submit
-                   </Button>,
+            title="Make request"
+            open={isModalOpen || false}
+            onCancel={myModalClose}
+            footer={[
+                <Button key="back" onClick={myModalClose}>
+                    Cancel
+                </Button>,
 
-               ]}
+                <Button
+                    key="submit"
+                    type="primary"
+                    loading={loading}
+                    onClick={onConfirm}
+                    disabled={disableSubmit}
+                >
+                    Submit
+                </Button>,
+            ]}
         >
             <div className="request-container">
                 <div className="request-information">
@@ -78,10 +98,11 @@ const MyModalMakeRequest = (props) => {
                     prefix={<KeyOutlined />}
                     value={tokenId}
                     onChange={onChange}
+                    disabled={disableSubmit}
                 />
             </div>
         </Modal>
-    )
-}
+    );
+};
 
-export default MyModalMakeRequest
+export default MyModalMakeRequest;

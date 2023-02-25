@@ -1,0 +1,36 @@
+.request-conatiner {
+    height: 94vh;
+    width: 100%;
+}
+.request-search {
+    display: flex;
+    padding-left: 40px;
+    padding-top: 12px;
+}
+.request-body {
+    display: flex;
+    justify-content: center;
+}
+.request__list {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    list-style-type: none;
+    /* margin-right: 35px; */
+    margin-top: 30px;
+    width: inherit;
+    max-width: 1200px;
+}
+.request__list  li {
+    /* margin-left: 15px; */
+    margin-right: 40px;
+    margin-bottom: 12px;
+}
+
+.request-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 12px;
+    margin-right: 12px;
+}

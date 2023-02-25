@@ -4,4 +4,7 @@
 }
 .request-information p {
     margin-left: 12px;
+    width: 250px;
+    word-break: break-all;
+    font-weight: bold;
 }

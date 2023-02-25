@@ -7,6 +7,7 @@ import MyProfile from '../pages/MyProfile'
 import VendorProfile from '../pages/VendorProfile'
 import Market from '../pages/Market'
 import NftDetal from '../pages/NftDetal'
+import Request from '../pages/Request'
 
 
 const Routers = () => {
@@ -19,7 +20,7 @@ const Routers = () => {
         <Route path='/vendor-profile' element={<VendorProfile/>}></Route>
         <Route path='/market' element={<Market/>}></Route>
         <Route path='/market/:id' element={<NftDetal/>}></Route>
-
+        <Route path='requests' element={<Request/>}></Route>
     </Routes>
   )
 }
