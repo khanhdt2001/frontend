@@ -27,6 +27,22 @@
     margin-bottom: 12px;
 }
 
+
+.request-info-footer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.request-info-footer .request-info-meta-head {
+    width: 60%;
+    margin-top: -12px;
+}
+
+.request-info-footer .request-info-meta-bottom {
+
+}
+
 .request-footer {
     position: fixed;
     bottom: 0;

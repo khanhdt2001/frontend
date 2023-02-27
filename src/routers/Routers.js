@@ -19,8 +19,8 @@ const Routers = () => {
         <Route path='/my-profile' element={<MyProfile/>}></Route>
         <Route path='/vendor-profile' element={<VendorProfile/>}></Route>
         <Route path='/market' element={<Market/>}></Route>
-        <Route path='/market/:id' element={<NftDetal/>}></Route>
-        <Route path='requests' element={<Request/>}></Route>
+        <Route path='/requests/:id' element={<NftDetal/>}></Route>
+        <Route path='/requests' element={<Request/>}></Route>
     </Routes>
   )
 }

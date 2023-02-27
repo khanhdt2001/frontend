@@ -33,7 +33,7 @@ const Market = () => {
     };
     useEffect(() => {
         const GetNftLocal = async () => {
-            await axios.get("http://192.168.1.59:5000/nfts").then(
+            await axios.get("http://localhost:5000/nfts").then(
                 async (response) => {
                     const dataLocal = response.data.nfts;
                     const data =
@@ -78,6 +78,7 @@ const Market = () => {
                                         display: "inline-flex",
                                         height: 0,
                                         lineHeight: 0,
+                                        fontWeight: "bold"
                                     }}
                                 >
                                     {nftData?.name}
