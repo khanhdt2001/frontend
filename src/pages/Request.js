@@ -112,12 +112,7 @@ const Request = () => {
                                             }}
                                         >
                                             {metadata[index]?.contract.name}
-                                            <CheckCircleOutlined
-                                                style={{
-                                                    fontSize: "14px",
-                                                    color: "#00a186",
-                                                }}
-                                            />
+                                            #{metadata[index]?.tokenId}
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">

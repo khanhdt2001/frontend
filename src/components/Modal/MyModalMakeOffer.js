@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Image, Input, Button } from "antd";
+import { Modal, Image, Input, Button, Form } from "antd";
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 const MyModalMakeOffer = (props) => {
     const { isModalOpen, setIsModalOpen, handleCancel } = props.data;
+    const [form] = Form.useForm();
     const myModalClose = () => {
         handleCancel();
-        
+    };
+    const onOk = () => {
+        form.submit();
+        console.log("click onOk")
+    }
+    const onFinish = (values) => {
+        console.log('Success:', values);
     };
     return (
         <Modal
             title="Make Offer"
             open={isModalOpen || false}
             onCancel={myModalClose}
-            
+            onOk={onOk}
         >
             <div className="offer-container">
                 <div className="request-information">
@@ -24,7 +32,71 @@ const MyModalMakeOffer = (props) => {
                     />
                 </div>
 
-                <Input size="large" placeholder="NFT tokenId" />
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={onFinish}
+                >
+                    <Form.Item
+                        label="Offer amount"
+                        name="Offer amount"
+                        tooltip={{
+                               title: 'Eth willing to offer',
+                               icon: <InfoCircleOutlined />,
+                           }}
+                       rules={[
+                           {
+                               required: true,
+                           },
+                       ]}>
+                        <Input type={"number"} placeholder="Eg: 1,2" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Rate"
+                        name="Rate"
+                        tooltip={{
+                            title: 'Percent',
+                            icon: <InfoCircleOutlined />,
+                        }}
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}>
+                        <Input type={"number"} placeholder="Eg: 1,2" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Days"
+                        name="Days"
+                        required
+                        tooltip={{
+                            title: 'How many days you willing to rent',
+                            icon: <InfoCircleOutlined />,
+                        }}
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input type={"number"} min={7} max={30} placeholder="Eg: 10"  />
+                    </Form.Item>
+                    <Form.Item
+                        label="Number of payment"
+                        name="Number of payment"
+                        tooltip={{
+                            title: 'How many days you willing to rent',
+                            icon: <InfoCircleOutlined />,
+                        }}
+                        rules={[
+                                {
+                                    required: true,
+                                },
+                        ]}
+                    >
+                        <Input type={"number"} min={7} max={30} placeholder="Eg: 10"  />
+                    </Form.Item>
+                </Form>
             </div>
         </Modal>
     );
