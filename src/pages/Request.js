@@ -17,6 +17,8 @@ const Request = () => {
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentDataLocal, setCurrentDataLocal] = useState()
+    const [currentDataWeb, setCurrentDataWeb] = useState()
     const onSearch = (value) => {
         setKeySearch(value);
         console.log(value);
@@ -31,8 +33,9 @@ const Request = () => {
         setIsModalOpen(false);
 
     };
-    const handleOnclick = (data) => {
-        console.log(data);
+    const handleOnclick = (dataLocal, dataWeb) => {
+        setCurrentDataLocal(dataLocal)
+        setCurrentDataWeb(dataWeb)
         setIsModalOpen(true)
         // navigate(`/requests/${data.receiptNumber}`)
     };
@@ -89,7 +92,7 @@ const Request = () => {
                                 hoverable
                                 style={{ width: 220 }}
                                 onClick={() => {
-                                    handleOnclick(data.receipts[index]);
+                                    handleOnclick(data.receipts[index], metadata[index]);
                                 }}
                                 cover={
                                     <img
@@ -132,6 +135,8 @@ const Request = () => {
                     isModalOpen,
                     setIsModalOpen,
                     handleCancel,
+                    currentDataLocal,
+                    currentDataWeb
                 }}
             ></MyModalMakeOffer>
         </div>

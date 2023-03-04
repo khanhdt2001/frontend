@@ -1,0 +1,14 @@
+.offer-container{
+    display: flex;
+    justify-content: space-around;
+}
+.request-information {
+    display: flex;
+    flex-direction: column;
+}
+.request-form {
+    /* height: 250px; */
+}
+.request-form-item {
+    /* margin-bottom: 12px; */
+}
