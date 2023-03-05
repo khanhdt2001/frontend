@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Input, Pagination, Card } from "antd";
+import { Input, Pagination, Card, Result } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,6 @@ const Request = () => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
-
     };
     const handleOnclick = (dataLocal, dataWeb) => {
         setCurrentDataLocal(dataLocal)
@@ -48,7 +47,7 @@ const Request = () => {
                 async (response) => {
                     setData(response.data);
                     setTotal(response.data.total);
-                    console.log(response.data);
+                    // console.log(response.data);
                     const result = await Promise.all(
                         response.data.receipts.map((item, index) =>
                             alchemy.nft.getNftMetadata(
@@ -58,7 +57,7 @@ const Request = () => {
                         )
                     );
                     setMetadata(result);
-                    console.log(result);
+                    // console.log(result);
 
                     SetIsLoading(false);
                 },
@@ -119,7 +118,7 @@ const Request = () => {
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">
-                                        Offers:
+                                        Offers: {data?.offer[index].offer.length}
                                     </div>
                                 </div>
                             </Card>
@@ -133,9 +132,9 @@ const Request = () => {
             <MyModalMakeOffer
                 data={{
                     isModalOpen,
-                    setIsModalOpen,
                     handleCancel,
                     currentDataLocal,
+                    SetIsLoading,
                     currentDataWeb
                 }}
             ></MyModalMakeOffer>

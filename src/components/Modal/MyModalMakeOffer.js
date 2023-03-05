@@ -1,61 +1,166 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Image, Input, Button, Form } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { Modal, Image, Input, Button, Form, notification } from "antd";
+import axios from "axios";
+import {
+    InfoCircleOutlined,
+    SmileOutlined,
+    MehOutlined,
+} from "@ant-design/icons";
 import "./MyModalMakeOffer.css";
-import { alchemy, convertIpfs } from "../../function/Function";
+import {
+    convertIpfs,
+    lenderMakeOffer,
+    cutStringErr,
+    convertToEth,
+    convertToDay
+} from "../../function/Function";
+import { AddressContext } from "../../context/MyContext";
 const MyModalMakeOffer = (props) => {
     const {
         isModalOpen,
-        setIsModalOpen,
         handleCancel,
         currentDataLocal,
+        SetIsLoading,
         currentDataWeb,
     } = props.data;
+    const { currentAddress } = React.useContext(AddressContext);
+    const [receipt, setReceipt] = useState([]);
     const [form] = Form.useForm();
-    const [pay1time, setPay1time] = useState()
-    const [payAllTime, setPayAllTime] = useState()
+    const [pay1time, setPay1time] = useState();
+    const [payAllTime, setPayAllTime] = useState();
+    const [loading, setLoading] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
+    useEffect(() => {
+        const getData = async () => {
+            await axios({
+                method: "get",
+                url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
+            }).then(
+                async (response) => {
+                    console.log(response.data);
+                    setReceipt(response.data);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        };
+        if (isModalOpen) {
+            getData();
+        }
+    }, [isModalOpen]);
     const myModalClose = () => {
         handleCancel();
         form.resetFields();
-        setPay1time(0)
-        setPayAllTime(0)
+        setPay1time(0);
+        setPayAllTime(0);
+        setDisableSubmit(false);
     };
     const onOk = () => {
         form.submit();
     };
-    const onFinish = (values) => {
-        // console.log('Success:', values);
+    const onFinish = async () => {
+        setLoading(true);
+        const offerAmount = form.getFieldValue("Offer amount");
+        const rate = form.getFieldValue("Rate");
+        const days = form.getFieldValue("Days");
+        const numberOfPayment = form.getFieldValue("Number of payment");
+        try {
+            const result = await lenderMakeOffer(
+                currentDataLocal.receiptNumber,
+                rate,
+                days,
+                numberOfPayment,
+                offerAmount,
+                currentAddress
+            );
+
+            openNotification("Tnx success", result.transactionHash);
+        } catch (error) {
+            openNotification("Tnx fail", cutStringErr(error.message));
+        }
+        setTimeout(() => {
+            setLoading(false);
+            SetIsLoading(true);
+            setDisableSubmit(true);
+        }, 3000);
+    };
+    const openNotification = (msg, des) => {
+        api.open({
+            message: msg,
+            description: des,
+            duration: 0,
+            icon:
+                msg === "Tnx success" ? (
+                    <SmileOutlined
+                        style={{
+                            color: "#108ee9",
+                        }}
+                    />
+                ) : (
+                    <MehOutlined
+                        style={{
+                            color: "red",
+                        }}
+                    />
+                ),
+        });
     };
     const onChangeInput = () => {
         const offerAmount = form.getFieldValue("Offer amount");
         const rate = form.getFieldValue("Rate");
-        const days = form.getFieldValue("Days")
-        const numberOfPayment = form.getFieldValue("Number of payment")
-        console.log("offerAmount", offerAmount);
-        console.log("rate", rate);
-        console.log("days", days);
-        console.log("number of payment", numberOfPayment);
-        const payOneTime = 
-        setPay1time(payOneTime)
+        const numberOfPayment = form.getFieldValue("Number of payment");
 
+        const interest = (offerAmount * rate) / 100 / numberOfPayment;
+        const payOneTime = offerAmount / numberOfPayment + interest;
+        setPay1time(payOneTime);
+        setPayAllTime(payOneTime * numberOfPayment);
     };
     return (
         <Modal
             title="Make Offer"
             open={isModalOpen || false}
             onCancel={myModalClose}
-            onOk={onOk}
+            footer={[
+                <Button key="back" onClick={myModalClose}>
+                    Cancel
+                </Button>,
+
+                <Button
+                    key="submit"
+                    type="primary"
+                    loading={loading}
+                    onClick={onOk}
+                    disabled={disableSubmit}
+                >
+                    Submit
+                </Button>,
+            ]}
         >
+            {contextHolder}
             <div className="offer-container">
-                <div className="request-information">
+                <div className="offer-information">
                     <Image
                         width={200}
                         height={200}
-                        src={convertIpfs(currentDataWeb.rawMetadata.image)}
+                        src={convertIpfs(currentDataWeb?.rawMetadata.image)}
                     />
-                    <div className="request-information-result">
-                        <p className="">Pay 1 time:</p>
-                        <p className="">Pay all time:</p>
+                    <div className="offer-information-result">
+                        <p className="">Pay 1 time: {pay1time || 0} eth</p>
+                        <p className="">Result: {payAllTime || 0} eth</p>
+                    </div>
+                    <div className="offer-list">
+                        <ul>
+                            {receipt?.offers?.map((data) => (
+                                <li className="" key={data.offerNumber}>
+                                    {"Rate: "}
+                                    {data.offerTokenRate}{", "}
+                                    {convertToEth(data.offerTokenAmount)}{" ETH, "}
+                                    {convertToDay(data.offerAmountOfTime)}{" Days"}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 

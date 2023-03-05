@@ -2,13 +2,12 @@
     display: flex;
     justify-content: space-around;
 }
-.request-information {
-    display: flex;
-    flex-direction: column;
+.offer-list {
+    height: 200px;
+    overflow-y: scroll;
+
 }
-.request-form {
-    /* height: 250px; */
-}
-.request-form-item {
-    /* margin-bottom: 12px; */
+.offer-list ul {
+    list-style-type: none;
+    padding: unset;
 }
