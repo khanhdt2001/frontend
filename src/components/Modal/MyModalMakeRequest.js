@@ -15,7 +15,6 @@ const MyModalMakeRequest = (props) => {
         setIsModalOpen,
         handleCancel,
         currentNftAddress,
-        currentLocalAddress,
     } = props.data;
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -36,7 +35,7 @@ const MyModalMakeRequest = (props) => {
 
         try {
             const response = await vendorMakeRequest(
-                currentLocalAddress,
+                currentNftAddress,
                 tokenId,
                 currentAddress
             );

@@ -46,19 +46,18 @@ const Request = () => {
             }).then(
                 async (response) => {
                     setData(response.data);
+                    console.log(response.data);
                     setTotal(response.data.total);
                     // console.log(response.data);
                     const result = await Promise.all(
                         response.data.receipts.map((item, index) =>
                             alchemy.nft.getNftMetadata(
-                                response.data.webAddress[index].webAddress,
+                                item.NFTAddress,
                                 item.tokenId
                             )
                         )
                     );
                     setMetadata(result);
-                    // console.log(result);
-
                     SetIsLoading(false);
                 },
                 (error) => {

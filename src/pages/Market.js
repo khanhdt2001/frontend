@@ -20,11 +20,11 @@ const Market = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
     const [currentNftAddress, setCurrentNftAddress] = useState("");
-    const [currentLocalAddress, setCurrentLocalAddress] = useState("");
-    const showModal = (address, localAddress) => {
+    // const [currentLocalAddress, setCurrentLocalAddress] = useState("");
+    const showModal = (address) => {
         setIsModalOpen(true);
         setCurrentNftAddress(address);
-        setCurrentLocalAddress(localAddress);
+        // setCurrentLocalAddress(localAddress);
     };
 
     const handleCancel = () => {
@@ -35,6 +35,7 @@ const Market = () => {
         const GetNftLocal = async () => {
             await axios.get("http://localhost:5000/nfts").then(
                 async (response) => {
+                    console.log(response);
                     const dataLocal = response.data.nfts;
                     const data =
                         (await Promise.all(
@@ -42,9 +43,9 @@ const Market = () => {
                                 alchemy.nft.getContractMetadata(nft.webAddress)
                             )
                         )) || [];
-                    for (let i = 0; i < data.length; i++) {
-                        data[i].localAddress = dataLocal[i].localAddress
-                    }
+                    // for (let i = 0; i < data.length; i++) {
+                    //     data[i].localAddress = dataLocal[i].localAddress
+                    // }
                     SetNFTInfo(data);
                     SetIsLoading(false);
                 },
@@ -107,7 +108,7 @@ const Market = () => {
                             type="primary"
                             className="market_li_btn"
                             onClick={() => {
-                                showModal(nftData?.address, nftData?.localAddress);
+                                showModal(nftData?.address);
                             }}
                         >
                             <DollarCircleOutlined />
@@ -122,7 +123,6 @@ const Market = () => {
                     setIsModalOpen,
                     handleCancel,
                     currentNftAddress,
-                    currentLocalAddress,
                 }}
             ></MyModalMakeRequest>
         </ul>
