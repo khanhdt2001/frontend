@@ -155,6 +155,7 @@ const MyModalMakeOffer = (props) => {
                   <p className="">Result: {payAllTime || 0} eth</p>
                </div>
                <div className="offer-list">
+                  List offers:
                   <ul>
                      {receipt?.offers?.map((data) => (
                         <li className="" key={data.offerNumber}>

@@ -1,13 +1,21 @@
-.offer-container{
+.offer-container {
     display: flex;
     justify-content: space-around;
 }
-.offer-list {
-    height: 200px;
-    overflow-y: scroll;
 
-}
 .offer-list ul {
+    height: 100px;
+    overflow-y: scroll;
     list-style-type: none;
     padding: unset;
+}
+.offer-list ul::-webkit-scrollbar {
+    width: 10px;
+}
+.offer-list ul::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.offer-list ul::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
