@@ -9,6 +9,7 @@ import {
 } from "../../function/Function";
 import { AddressContext } from "../../context/MyContext";
 import "./MyModalMakeRequest.css";
+const { ethereum } = window;
 
 const MyModalMakeRequest = (props) => {
     const { isModalOpen, setIsModalOpen, handleCancel, currentNftAddress } =
@@ -17,7 +18,7 @@ const MyModalMakeRequest = (props) => {
     const [tokenId, setTokenId] = useState(0);
     const [imageLink, setImageLink] = useState("error");
     const [disableSubmit, setDisableSubmit] = useState(false);
-    const { currentAddress } = React.useContext(AddressContext);
+    const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
     const [api, contextHolder] = notification.useNotification();
     const myModalClose = () => {
         handleCancel();
@@ -48,13 +49,20 @@ const MyModalMakeRequest = (props) => {
         });
      };
     const onConfirm = async () => {
+        var addressData
+        if (!currentAddress) {
+            const listAccount = await ethereum.request({
+                method: "eth_requestAccounts",
+            });
+            addressData = listAccount[0];
+            await loginMetaMask(addressData);
+        }
         setLoading(true);
-
         try {
             const response = await vendorMakeRequest(
                 currentNftAddress,
                 tokenId,
-                currentAddress
+                addressData||currentAddress
             );
             const res = await alchemy.nft.getNftMetadata(
                 currentNftAddress,

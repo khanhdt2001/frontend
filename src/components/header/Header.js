@@ -19,23 +19,6 @@ const Header = () => {
             });
             const addressData = listAccount[0];
             await loginMetaMask(addressData);
-            // const token = await Web3Token.sign(
-            //     (msg) => web3.eth.personal.sign(msg, addressData),
-            //     "1d"
-            // );
-            // await axios
-            //     .post("http://192.168.1.59:5000/connect-wallet", {
-            //         web3Token : token,
-            //     })
-            //     .then(
-            //         (response) => {
-            //             localStorage.setItem("my-token", response.data.jwt);
-            //         },
-            //         (error) => {
-            //             console.log(error);
-            //         }
-            //     );
-            
         }
     };
     return (
