@@ -19,3 +19,7 @@
 .offer-list ul::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.offer-list li {
+    border-bottom: 1px solid black;
+}

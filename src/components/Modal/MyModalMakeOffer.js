@@ -81,18 +81,7 @@ const MyModalMakeOffer = (props) => {
             setLoading(false);
             SetIsLoading(true);
             setDisableSubmit(true);
-            await axios({
-               method: "get",
-               url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
-            }).then(
-               async (response) => {
-                  console.log(response.data);
-                  setReceipt(response.data);
-               },
-               (error) => {
-                  console.log(error);
-               }
-            );
+            await getData()
          }, 3000);
       } catch (error) {
          setTimeout(() => {
@@ -176,7 +165,8 @@ const MyModalMakeOffer = (props) => {
                            {convertToEth(data.offerTokenAmount)}
                            {" ETH, "}
                            {convertToDay(data.offerAmountOfTime)}
-                           {" Days"}
+                           {" Days, "}
+                           {data.offerPayTime}
                         </li>
                      ))}
                   </ul>

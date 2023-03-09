@@ -3,16 +3,19 @@ import axios from "axios";
 import { Pagination, Card } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import { AddressContext } from "../context/MyContext";
-
+import { useNavigate } from "react-router-dom";
 const MyRequest = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [data, setData] = useState([]);
     const [metadata, setMetadata] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-
+    const navigate = useNavigate();
    const { currentAddress } = React.useContext(AddressContext);
-
+    const handleOnclick = (receipt) => {
+        console.log("receipt", receipt);
+        navigate(`/requests/${receipt.receiptNumber}`);
+    }
     useEffect(() => {
         const GetRequests = async () => {
             await axios({
@@ -53,7 +56,7 @@ const MyRequest = () => {
                         hoverable
                         style={{ width: 220 }}
                         onClick={() => {
-                            // handleOnclick(data.receipts[index], metadata[index]);
+                            handleOnclick(receipt);
                         }}
                         cover={
                             <img
