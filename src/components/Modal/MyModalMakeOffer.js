@@ -31,21 +31,22 @@ const MyModalMakeOffer = (props) => {
    const [loading, setLoading] = useState(false);
    const [disableSubmit, setDisableSubmit] = useState(false);
    const [api, contextHolder] = notification.useNotification();
+   const getData = async () => {
+      await axios({
+         method: "get",
+         url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
+      }).then(
+         async (response) => {
+            console.log(response.data);
+            setReceipt(response.data);
+         },
+         (error) => {
+            console.log(error);
+         }
+      );
+   }
    useEffect(() => {
-      const getData = async () => {
-         await axios({
-            method: "get",
-            url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
-         }).then(
-            async (response) => {
-               console.log(response.data);
-               setReceipt(response.data);
-            },
-            (error) => {
-               console.log(error);
-            }
-         );
-      };
+      
       if (isModalOpen) {
          getData();
       }
@@ -75,17 +76,28 @@ const MyModalMakeOffer = (props) => {
             offerAmount,
             currentAddress
          );
-         setTimeout(() => {
+         setTimeout(async() => {
             openNotification("Tnx success", result.transactionHash);
             setLoading(false);
             SetIsLoading(true);
             setDisableSubmit(true);
+            await axios({
+               method: "get",
+               url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
+            }).then(
+               async (response) => {
+                  console.log(response.data);
+                  setReceipt(response.data);
+               },
+               (error) => {
+                  console.log(error);
+               }
+            );
          }, 3000);
       } catch (error) {
          setTimeout(() => {
             setLoading(false);
             SetIsLoading(true);
-            setDisableSubmit(true);
             openNotification("Tnx fail", cutStringErr(error.message));
          }, 3000);
       }
@@ -115,7 +127,6 @@ const MyModalMakeOffer = (props) => {
       const offerAmount = form.getFieldValue("Offer amount");
       const rate = form.getFieldValue("Rate");
       const numberOfPayment = form.getFieldValue("Number of payment");
-
       const interest = (offerAmount * rate) / 100 / numberOfPayment;
       const payOneTime = offerAmount / numberOfPayment + interest;
       setPay1time(payOneTime);

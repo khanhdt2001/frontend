@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Input, Pagination, Card } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
-import { useNavigate } from "react-router-dom";
 import MyModalMakeOffer from "../components/Modal/MyModalMakeOffer";
 import "./css/requests.css";
 const { Search } = Input;
@@ -14,7 +13,6 @@ const Request = () => {
     const [keySearch, setKeySearch] = useState("");
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-    const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentDataLocal, setCurrentDataLocal] = useState()
     const [currentDataWeb, setCurrentDataWeb] = useState()
@@ -35,7 +33,6 @@ const Request = () => {
         setCurrentDataLocal(dataLocal)
         setCurrentDataWeb(dataWeb)
         setIsModalOpen(true)
-        // navigate(`/requests/${data.receiptNumber}`)
     };
     useEffect(() => {
         const GetRequests = async () => {
@@ -47,7 +44,6 @@ const Request = () => {
                     setData(response.data);
                     console.log(response.data);
                     setTotal(response.data.total);
-                    // console.log(response.data);
                     const result = await Promise.all(
                         response.data.receipts.map((item, index) =>
                             alchemy.nft.getNftMetadata(
@@ -125,7 +121,7 @@ const Request = () => {
                 </ul>
             </div>
             <div className="request-footer">
-                <Pagination defaultCurrent={1} pageSize={8} total={total} />
+                <Pagination current={page} pageSize={8} total={total} />
             </div>
             <MyModalMakeOffer
                 data={{
