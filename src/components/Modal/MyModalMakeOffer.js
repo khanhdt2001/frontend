@@ -15,6 +15,8 @@ import {
    convertToDay,
 } from "../../function/Function";
 import { AddressContext } from "../../context/MyContext";
+const { ethereum } = window;
+
 const MyModalMakeOffer = (props) => {
    const {
       isModalOpen,
@@ -23,7 +25,7 @@ const MyModalMakeOffer = (props) => {
       SetIsLoading,
       currentDataWeb,
    } = props.data;
-   const { currentAddress } = React.useContext(AddressContext);
+   const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
    const [receipt, setReceipt] = useState([]);
    const [form] = Form.useForm();
    const [pay1time, setPay1time] = useState();
@@ -62,6 +64,14 @@ const MyModalMakeOffer = (props) => {
       form.submit();
    };
    const onFinish = async () => {
+      var addressData
+      if (!currentAddress) {
+         const listAccount = await ethereum.request({
+             method: "eth_requestAccounts",
+         });
+         addressData = listAccount[0];
+         await loginMetaMask(addressData);
+     }
       setLoading(true);
       const offerAmount = form.getFieldValue("Offer amount");
       const rate = form.getFieldValue("Rate");
@@ -74,7 +84,7 @@ const MyModalMakeOffer = (props) => {
             days,
             numberOfPayment,
             offerAmount,
-            currentAddress
+            addressData||currentAddress
          );
          setTimeout(async() => {
             openNotification("Tnx success", result.transactionHash);

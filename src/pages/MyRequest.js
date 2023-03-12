@@ -14,7 +14,7 @@ const MyRequest = () => {
    const { currentAddress } = React.useContext(AddressContext);
     const handleOnclick = (receipt) => {
         console.log("receipt", receipt);
-        navigate(`/requests/${receipt.receiptNumber}`);
+        navigate(`/receipt/${receipt.receiptNumber}`);
     }
     useEffect(() => {
         const GetRequests = async () => {

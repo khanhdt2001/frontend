@@ -5,13 +5,9 @@ import { DollarCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest";
+import {alchemy} from "../function/Function"
 import "./css/Market.css";
-const settings = {
-    apiKey: "-C7_ur_4s6R0oUnBNGi4qB3XWfv-HsFR",
-    network: Network.ETH_MAINNET,
-};
 
-const alchemy = new Alchemy(settings);
 const { Meta } = Card;
 
 const Market = () => {

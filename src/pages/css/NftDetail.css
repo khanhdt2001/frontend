@@ -1,14 +1,43 @@
 .nft-detail {
     padding: 60px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 .nft-detail-info {
     width: 300px;
     height: 600px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #fff;
+    margin-top: 14px;
+    border-radius: 12px;
+    padding-top: 16px;
 }
 .nft-detail-script {
     width: 200px;
+    word-break: break-all;
+}
+.nft-detail-offer ul {
+    list-style-type: none;
+}
+.nft-detail-li {
+    margin-bottom: 12px;
+}
+.nft-detail-li :only-child {
+    display: flex;
+}
+.nft-detail-offer-description {
+    min-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.nft-detail-offer-description div {
+    margin-right: 12px;
+}
+.selected {
+    background-color: #04aa6d !important;
 }
