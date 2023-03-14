@@ -15,10 +15,21 @@
     margin-top: 14px;
     border-radius: 12px;
     padding-top: 16px;
+    position: relative;
+}
+.nft-detail-info-btn {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
 }
 .nft-detail-script {
     width: 200px;
     word-break: break-all;
+}
+.nft-detail-script :first-child {
+    height: 32px;
 }
 .nft-detail-offer ul {
     list-style-type: none;

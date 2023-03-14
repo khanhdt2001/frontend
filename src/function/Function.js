@@ -86,7 +86,6 @@ export const lenderMakeOffer = async (
     ethAmount,
     myAccount
 ) => {
-    console.log("requestNumber", requestNumber);
     const value = web3.utils.toWei(ethAmount, "ether");
     const second = amountOfTime * 24 * 60 * 60;
     const res = await lending.methods
@@ -97,3 +96,16 @@ export const lenderMakeOffer = async (
         });
     return res;
 };
+
+export const vendorAcceptOffer = async (
+    requestNumber,
+    offerNumber,
+    myAccount
+) => {
+    const res = await lending.methods
+    .vendorAcceptOffer(requestNumber, offerNumber)
+    .send({
+        from:myAccount
+    })
+    return res;
+}
