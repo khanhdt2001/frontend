@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Pagination, Card } from "antd";
+import { Pagination, Card, Tooltip, Avatar } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import { AddressContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
+import makeBlockie from "ethereum-blockies-base64";
+import "./css/myRequest.css";
+const { Meta } = Card;
 const MyRequest = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -11,11 +14,11 @@ const MyRequest = () => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
-   const { currentAddress } = React.useContext(AddressContext);
+    const { currentAddress } = React.useContext(AddressContext);
     const handleOnclick = (receipt) => {
         console.log("receipt", receipt);
         navigate(`/receipt/${receipt.receiptNumber}`);
-    }
+    };
     useEffect(() => {
         const GetRequests = async () => {
             await axios({
@@ -46,57 +49,75 @@ const MyRequest = () => {
             GetRequests();
         }
     }, [isLoading]);
-  return (
-    <div className="request-conatiner">
-    <div className="request-body">
-        <ul className="request__list">
-            {data?.receipts?.map((receipt, index) => (
-                <li key={receipt.receiptNumber}>
-                    <Card
-                        hoverable
-                        style={{ width: 220 }}
-                        onClick={() => {
-                            handleOnclick(receipt);
-                        }}
-                        cover={
-                            <img
-                                alt="example"
-                                src={convertIpfs(
-                                    metadata[index]?.rawMetadata.image
+    return (
+        <div className="request-conatiner">
+            <div className="request-body">
+                <ul className="request__list">
+                    {data?.receipts?.map((receipt, index) => (
+                        <li key={receipt.receiptNumber}>
+                            <Card
+                                hoverable
+                                style={{ width: 220 }}
+                                onClick={() => {
+                                    handleOnclick(receipt);
+                                }}
+                                cover={
+                                    <img
+                                        alt="example"
+                                        src={convertIpfs(
+                                            metadata[index]?.rawMetadata.image
+                                        )}
+                                    />
+                                }
+                            >
+                                {receipt?.lendor !=
+                                "0x0000000000000000000000000000000000000000" ? (
+                                    <Tooltip
+                                        className="my_request_tooltip"
+                                        title={receipt.lendor}
+                                    >
+                                        <Meta
+                                            avatar={
+                                                <Avatar
+                                                    size={45}
+                                                    src={makeBlockie(receipt.lendor)}
+                                                />
+                                            }
+                                        />
+                                    </Tooltip>
+                                ) : (
+                                    <></>
                                 )}
-                            />
-                        }
-                    >
-                        <div className="request-info-footer">
-                            <div className="request-info-meta-head">
-                                <p
-                                    style={{
-                                        display: "inline-flex",
-                                        height: 0,
-                                        lineHeight: 0,
-                                        alignItems: "center",
-                                        fontWeight: "bold",
-                                    }}
-                                >
-                                    {metadata[index]?.contract.name}
-                                    #{metadata[index]?.tokenId}
-                                </p>
-                            </div>
-                            <div className="request-info-meta-bottom">
-                                Offers: {data?.offer[index].offer.length}
-                            </div>
-                        </div>
-                    </Card>
-                </li>
-            ))}
-        </ul>
-    </div>
-    <div className="request-footer">
-        <Pagination defaultCurrent={1} pageSize={8} total={total} />
-    </div>
+                                <div className="request-info-footer">
+                                    <div className="request-info-meta-head">
+                                        <p
+                                            style={{
+                                                display: "inline-flex",
+                                                height: 0,
+                                                lineHeight: 0,
+                                                alignItems: "center",
+                                                fontWeight: "bold",
+                                            }}
+                                        >
+                                            {metadata[index]?.contract.name}#
+                                            {metadata[index]?.tokenId}
+                                        </p>
+                                    </div>
+                                    <div className="request-info-meta-bottom">
+                                        Offers:{" "}
+                                        {data?.offer[index].offer.length}
+                                    </div>
+                                </div>
+                            </Card>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="request-footer">
+                <Pagination defaultCurrent={1} pageSize={8} total={total} />
+            </div>
+        </div>
+    );
+};
 
-</div>
-  )
-}
-
-export default MyRequest
+export default MyRequest;

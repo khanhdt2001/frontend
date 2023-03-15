@@ -20,7 +20,7 @@ import {
     alchemy,
     convertIpfs,
     vendorAcceptOffer,
-    cutStringErr
+    cutStringErr,
 } from "../function/Function";
 import makeBlockie from "ethereum-blockies-base64";
 import { AddressContext } from "../context/MyContext";
@@ -129,33 +129,37 @@ const NftDetail = () => {
         }
     };
     const onConfirm = async () => {
-        var addressData;
-        if (!currentAddress) {
-            const listAccount = await ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            addressData = listAccount[0];
-            await loginMetaMask(addressData);
-        }
-        setLoading(true);
-        try {
-            const result = vendorAcceptOffer(
-                selectOffer.receiptNumber,
-                selectOffer.offerNumber,
-                addressData || currentAddress
-            );
-            console.log("result", result);
-            setTimeout(async() => {
-                openNotification("Tnx success", "result.transactionHash");
-                setLoading(false);
-                setDisableSubmit(true);
-                // await getData()
-             }, 3000);
-        } catch (error) {
-            setTimeout(() => {
-                setLoading(false);
-                openNotification("Tnx fail", cutStringErr(error.message));
-             }, 3000);
+        if (selectOffer != null) {
+            var addressData;
+            if (!currentAddress) {
+                const listAccount = await ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                addressData = listAccount[0];
+                await loginMetaMask(addressData);
+            }
+            setLoading(true);
+            try {
+                const result = vendorAcceptOffer(
+                    selectOffer.receiptNumber,
+                    selectOffer.offerNumber,
+                    addressData || currentAddress
+                );
+                console.log("result", result);
+                setTimeout(async () => {
+                    openNotification("Tnx success", result.transactionHash);
+                    setLoading(false);
+                    setDisableSubmit(true);
+                    SetIsLoading(true);
+
+                    // await getData()
+                }, 3000);
+            } catch (error) {
+                setTimeout(() => {
+                    setLoading(false);
+                    openNotification("Tnx fail", cutStringErr(error.message));
+                }, 3000);
+            }
         }
     };
     return (
@@ -182,7 +186,7 @@ const NftDetail = () => {
                         loading={loading}
                         disabled={disableSubmit}
                         type="primary"
-                        style={{ width: "80px" }}
+                        style={{ minWidth: "80px" }}
                         onClick={onConfirm}
                     >
                         Choose
