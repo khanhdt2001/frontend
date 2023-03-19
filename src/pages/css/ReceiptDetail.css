@@ -1,0 +1,19 @@
+.receipt_detail {
+    margin: 14px 0;
+    padding-left: 40px;
+}
+.receipt_detail_step_content{
+    line-height: 260px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.45);
+    /* background-color: ; */
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    border: 1px dashed rgb(217, 217, 217);
+    margin-top: 16px;
+}
+.receipt_detail_btn {
+    display: flex;
+    margin-top: 24px;
+    justify-content: space-between;
+}

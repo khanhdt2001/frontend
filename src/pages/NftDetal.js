@@ -15,7 +15,6 @@ import "./css/NftDetail.css";
 import axios from "axios";
 import {
     convertToEth,
-    myShortString,
     convertToDay,
     alchemy,
     convertIpfs,
@@ -24,6 +23,7 @@ import {
 } from "../function/Function";
 import makeBlockie from "ethereum-blockies-base64";
 import { AddressContext } from "../context/MyContext";
+import ReceiptDetail from "./ReceiptDetail";
 const { Meta } = Card;
 const { ethereum } = window;
 
@@ -69,7 +69,6 @@ const NftDetail = () => {
             url: `http://localhost:5000${location.pathname}`,
         }).then(
             async (response) => {
-                // console.log("response", response);
                 setNft(response.data.nft);
                 setOffer(response.data.offers);
                 setReceipt(response.data.receipt);
@@ -78,6 +77,17 @@ const NftDetail = () => {
                     response.data.receipt.tokenId
                 );
                 setMetaData(data);
+                if(response.data.receipt.tokenRate != "0" ) {
+                    setlendor(response.data.receipt.lendor);
+
+                    const offerAmount = response.data.receipt.tokenAmount;
+                    const rate = response.data.receipt.tokenRate;
+                    const numberOfPayment = response.data.receipt.paymentTime;
+                    const interest = (offerAmount * rate) / 100 / numberOfPayment;
+                    const payOneTime = offerAmount / numberOfPayment + interest;
+                    setPay1Time(payOneTime);
+                    setpayAllTime(payOneTime * numberOfPayment);
+                }
             },
             (error) => {
                 console.log("error", error);
@@ -87,6 +97,7 @@ const NftDetail = () => {
     };
     useEffect(() => {
         if (isLoading) {
+            console.log("load data-=-----------------");
             getData();
         }
     }, [isLoading]);
@@ -140,7 +151,7 @@ const NftDetail = () => {
             }
             setLoading(true);
             try {
-                const result = vendorAcceptOffer(
+                const result = await vendorAcceptOffer(
                     selectOffer.receiptNumber,
                     selectOffer.offerNumber,
                     addressData || currentAddress
@@ -178,7 +189,7 @@ const NftDetail = () => {
                         Pay all time: {convertToEth(payAllTime)} eth
                     </p>
                 </div>
-                <div className="nft-detail-info-btn">
+                {receipt?.tokenRate == "0" ? <div className="nft-detail-info-btn">
                     <Button style={{ width: "80px" }} onClick={clearInfo}>
                         Clear
                     </Button>
@@ -191,53 +202,65 @@ const NftDetail = () => {
                     >
                         Choose
                     </Button>
-                </div>
+                </div>: <></>}
+                
             </div>
             <div className="nft-detail-offer">
-                <ul>
-                    {offer?.map((data, index) => (
-                        <li className="nft-detail-li" key={data._id}>
-                            <Card className="nft-detail-offer-card" hoverable>
-                                <Tooltip title={data.lendor}>
-                                    <Meta
-                                        avatar={
-                                            <Avatar
-                                                size={45}
-                                                src={makeBlockie(data.lendor)}
-                                            />
-                                        }
-                                    />
-                                </Tooltip>
-                                <Row className="nft-detail-offer-description">
-                                    <Col>
-                                        {" "}
-                                        ETH:{" "}
-                                        {convertToEth(
-                                            data.offerTokenAmount
-                                        )}{" "}
-                                    </Col>
-                                    <Col> Rate: {data.offerTokenRate} </Col>
-                                    <Col>
-                                        {" "}
-                                        Days:{" "}
-                                        {convertToDay(data.offerAmountOfTime)}
-                                    </Col>
-                                    <Col>Pay Time: {data.offerPayTime}</Col>
-                                </Row>
-                                <Button
-                                    size="large"
-                                    type="primary"
-                                    className="li_btn"
-                                    onClick={() => {
-                                        handleOnclick(data, index);
-                                    }}
+                {receipt?.tokenRate === 0 ? (
+                    <ul>
+                        {offer?.map((data, index) => (
+                            <li className="nft-detail-li" key={data._id}>
+                                <Card
+                                    className="nft-detail-offer-card"
+                                    hoverable
                                 >
-                                    Detail
-                                </Button>
-                            </Card>
-                        </li>
-                    ))}
-                </ul>
+                                    <Tooltip title={data.lendor}>
+                                        <Meta
+                                            avatar={
+                                                <Avatar
+                                                    size={45}
+                                                    src={makeBlockie(
+                                                        data.lendor
+                                                    )}
+                                                />
+                                            }
+                                        />
+                                    </Tooltip>
+                                    <Row className="nft-detail-offer-description">
+                                        <Col>
+                                            {" "}
+                                            ETH:{" "}
+                                            {convertToEth(
+                                                data.offerTokenAmount
+                                            )}{" "}
+                                        </Col>
+                                        <Col> Rate: {data.offerTokenRate} </Col>
+                                        <Col>
+                                            {" "}
+                                            Days:{" "}
+                                            {convertToDay(
+                                                data.offerAmountOfTime
+                                            )}
+                                        </Col>
+                                        <Col>Pay Time: {data.offerPayTime}</Col>
+                                    </Row>
+                                    <Button
+                                        size="large"
+                                        type="primary"
+                                        className="li_btn"
+                                        onClick={() => {
+                                            handleOnclick(data, index);
+                                        }}
+                                    >
+                                        Detail
+                                    </Button>
+                                </Card>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <ReceiptDetail data={{receipt, pay1Time, payAllTime, SetIsLoading}}/>
+                )}
             </div>
         </div>
     );

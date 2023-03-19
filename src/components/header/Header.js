@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
-import { Row, Col } from "antd";
+import { Row, Col, Drawer } from "antd";
 import { WalletOutlined, FireOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { AddressContext } from "../../context/MyContext";
@@ -8,9 +8,17 @@ import { myShortString } from "../../function/Function";
 import axios from "axios";
 import Web3 from "web3";
 import Web3Token from "web3-token";
+import MyDrawer from "../drawer/MyDrawer";
 const { ethereum } = window;
 const web3 = new Web3(Web3.givenProvider);
 const Header = () => {
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
     const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
     const connectWallet = async () => {
         if (!currentAddress) {
@@ -19,16 +27,12 @@ const Header = () => {
             });
             const addressData = listAccount[0];
             await loginMetaMask(addressData);
+        } else {
+            showDrawer();
         }
     };
     return (
-        <Row
-            className="my-header-row"
-            style={{
-                background:
-                    "linear-gradient(-45deg, #e250e5, #4b50e6, #e250e5, #4b50e6)",
-            }}
-        >
+        <Row className="my-header-row">
             <Col span={3}>
                 <Row justify={"center"} className="my-header-logo">
                     <FireOutlined style={{ fontSize: "30px" }} />
@@ -47,6 +51,14 @@ const Header = () => {
                     </Button>
                 </Row>
             </Col>
+            <Drawer
+                title="My wallet"
+                placement="right"
+                onClose={onClose}
+                open={open}
+            >
+                <MyDrawer />
+            </Drawer>
         </Row>
     );
 };

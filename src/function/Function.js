@@ -2,7 +2,7 @@ import { Alchemy, Network } from "alchemy-sdk";
 import ERC721 from "../contract/ERC721.json";
 import LendingContract from "../contract/LendingFactory.json";
 const Web3 = require("web3");
-const web3 = new Web3("http://127.0.0.1:8545/");
+const web3 = new Web3(Web3.givenProvider);
 const nftAbi = ERC721.abi;
 const lendingAbi = LendingContract.abi;
 const Lending = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
@@ -48,20 +48,20 @@ export const cutStringErr = (message) => {
             "Returned error: Error: VM Exception while processing transaction: reverted with reason string",
             ""
         );
-        const res = cutString.replaceAll("'", "")
+        const res = cutString.replaceAll("'", "");
         return res;
     }
     return "";
 };
 
 export const convertToEth = (string) => {
-    return web3.utils.fromWei(string.toString(), 'ether');
-}
+    return web3.utils.fromWei(string.toString(), "ether");
+};
 
 export const convertToDay = (second) => {
     const day = second / 24 / 60 / 60;
-    return day
-}
+    return day;
+};
 
 /**************** smart contract function ****************/
 export const vendorMakeRequest = async (nftaddress, tokenId, myAccount) => {
@@ -103,9 +103,18 @@ export const vendorAcceptOffer = async (
     myAccount
 ) => {
     const res = await lending.methods
-    .vendorAcceptOffer(requestNumber, offerNumber)
-    .send({
-        from:myAccount
-    })
+        .vendorAcceptOffer(requestNumber, offerNumber)
+        .send({
+            from: myAccount,
+        });
     return res;
-}
+};
+
+export const vendorPayRountine = async (requestNumber, ethValue, myAccount) => {
+    console.log(requestNumber, ethValue, myAccount);
+    const res = await lending.methods.vendorPayRountine(requestNumber).send({
+        from: myAccount,
+        value: ethValue,
+    });
+    return res;
+};

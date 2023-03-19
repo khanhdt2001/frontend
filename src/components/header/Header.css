@@ -2,6 +2,8 @@
     height: 50px;
     align-items: center;
     color: white;
+    background-color: #001428;
+    background-image: linear-gradient(to right, #1677ff , #001428);
 }
 
 .my-header-row .my-header-logo {
