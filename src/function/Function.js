@@ -111,10 +111,20 @@ export const vendorAcceptOffer = async (
 };
 
 export const vendorPayRountine = async (requestNumber, ethValue, myAccount) => {
-    console.log(requestNumber, ethValue, myAccount);
     const res = await lending.methods.vendorPayRountine(requestNumber).send({
         from: myAccount,
         value: ethValue,
+    });
+    return res;
+};
+
+export const getAddressBalance = async (account) => {
+    const res = await lending.methods.getAddressBalance(account).call();
+    return res;
+};
+export const withdrawEth = async (token, myAccount) => {
+    const res = await lending.methods.withdrawEth(token).send({
+        from: myAccount,
     });
     return res;
 };

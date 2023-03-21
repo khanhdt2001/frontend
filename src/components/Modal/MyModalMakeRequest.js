@@ -15,7 +15,7 @@ const MyModalMakeRequest = (props) => {
     const { isModalOpen, setIsModalOpen, handleCancel, currentNftAddress } =
         props.data;
     const [loading, setLoading] = useState(false);
-    const [tokenId, setTokenId] = useState(0);
+    const [tokenId, setTokenId] = useState();
     const [imageLink, setImageLink] = useState("error");
     const [disableSubmit, setDisableSubmit] = useState(false);
     const { currentAddress, loginMetaMask } = React.useContext(AddressContext);

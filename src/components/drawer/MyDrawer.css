@@ -1,3 +1,15 @@
 .my_drawer{
     
 }
+.my_drawer_balance {
+    display: flex;
+    align-items: flex-end;
+}
+.my_drawer_balance .my_drawer_balance_icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+.my_drawer_input {
+    margin-top: 12px;
+}

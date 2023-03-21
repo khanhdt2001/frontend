@@ -58,7 +58,7 @@ const Header = () => {
                 open={open}
                 width="400px"
             >
-                <MyDrawer />
+                <MyDrawer data={{open}}/>
             </Drawer>
         </Row>
     );
