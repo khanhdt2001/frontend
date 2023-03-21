@@ -52,10 +52,11 @@ const Header = () => {
                 </Row>
             </Col>
             <Drawer
-                title="My wallet"
+                title="Balance"
                 placement="right"
                 onClose={onClose}
                 open={open}
+                width="400px"
             >
                 <MyDrawer />
             </Drawer>
