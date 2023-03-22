@@ -13,3 +13,8 @@
 .my_drawer_input {
     margin-top: 12px;
 }
+.custom_class{
+    position: absolute;
+    bottom: -96vh;
+    left: 24px;
+}

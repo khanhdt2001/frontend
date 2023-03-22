@@ -57,6 +57,9 @@ export const cutStringErr = (message) => {
 export const convertToEth = (string) => {
     return web3.utils.fromWei(string.toString(), "ether");
 };
+export const convertoWei = (string) => {
+    return web3.utils.toWei(string, "ether");
+};
 
 export const convertToDay = (second) => {
     const day = second / 24 / 60 / 60;
@@ -122,9 +125,18 @@ export const getAddressBalance = async (account) => {
     const res = await lending.methods.getAddressBalance(account).call();
     return res;
 };
+
 export const withdrawEth = async (token, myAccount) => {
     const res = await lending.methods.withdrawEth(token).send({
         from: myAccount,
     });
     return res;
 };
+
+export const depositEth = async (token, myAccount) => {
+    const res = await lending.methods.depositEth().send({
+        from: myAccount,
+        value: token
+    })
+    return res;
+}
