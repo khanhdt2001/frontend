@@ -8,6 +8,7 @@ import {
     convertToEth,
     withdrawEth,
     convertoWei,
+    depositEth,
 } from "../../function/Function";
 import { AddressContext } from "../../context/MyContext";
 
@@ -18,6 +19,7 @@ const MyDrawer = (props) => {
     const [balance, setbalance] = useState();
     const [disbtn, setDisbtn] = useState(false);
     const [eth, setEth] = useState();
+    const [deposit, setDeposit] = useState();
     const { currentAddress } = React.useContext(AddressContext);
 
     const { open } = props.data;
@@ -31,27 +33,48 @@ const MyDrawer = (props) => {
         await withdrawEth(target, currentAddress);
         await getBalance();
     };
+    const depositToken = async (value) => {
+        const target = convertoWei(value)
+        await depositEth(target, currentAddress);
+        await getBalance();
+    }
     if (open) {
         getBalance().then();
     }
     const onChange = (e) => {
         setEth(e.target.value);
     };
-    const onClick = async () => {
+    const onChangeDeposit = (e) => {
+        setDeposit(e.target.value);
+    };
+    const onWithdraw = async () => {
         if (eth > 0) {
             setDisbtn(true);
-            await withdraw(eth)
+            await withdraw(eth);
             setTimeout(() => {
-                success();
+                success(`You have received ${eth} eth to your address`);
                 setEth();
                 setDisbtn(false);
             }, 2000);
         }
     };
-    const success = () => {
+
+    const onDeposit = async () => {
+        console.log("onDeposit");
+        if (deposit > 0) {
+            setDisbtn(true);
+            await depositToken(deposit)
+            setTimeout(() => {
+                success(`You have received ${deposit} eth to contract`);
+                setDeposit();
+                setDisbtn(false);
+            }, 2000);
+        }
+    };
+    const success = (content) => {
         messageApi.open({
             type: "success",
-            content: `You have received ${eth} eth to your address`,
+            content: content,
             className: "custom_class",
             duration: 3,
         });
@@ -79,8 +102,31 @@ const MyDrawer = (props) => {
                         onChange={onChange}
                         placeholder="Amount of eth want to withdraw"
                     />
-                    <Button disabled={disbtn} onClick={onClick} type="primary">
+                    <Button
+                        disabled={disbtn}
+                        onClick={onWithdraw}
+                        type="primary"
+                    >
                         Widthdraw
+                    </Button>
+                </Space.Compact>
+                <Space.Compact
+                    className="deposit_my_drawer_input"
+                    style={{
+                        width: "100%",
+                    }}
+                >
+                    <Input
+                        value={deposit}
+                        onChange={onChangeDeposit}
+                        placeholder="Amount of eth want to deposit"
+                    />
+                    <Button
+                        disabled={disbtn}
+                        onClick={onDeposit}
+                        type="default"
+                    >
+                        Deposit
                     </Button>
                 </Space.Compact>
             </div>

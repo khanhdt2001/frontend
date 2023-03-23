@@ -5,6 +5,7 @@ import { alchemy, convertIpfs } from "../function/Function";
 import { AddressContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
 import makeBlockie from "ethereum-blockies-base64";
+import checked from "../assets/picture/checked.png";
 import "./css/myRequest.css";
 const { Meta } = Card;
 const MyRequest = () => {
@@ -70,8 +71,10 @@ const MyRequest = () => {
                                     />
                                 }
                             >
-                                {receipt?.lendor !=
-                                "0x0000000000000000000000000000000000000000" ? (
+                                {receipt?.paymentCount ===
+                                    receipt?.paymentTime &&
+                                receipt?.lendor !==
+                                    "0x0000000000000000000000000000000000000000" ? (
                                     <Tooltip
                                         className="my_request_tooltip"
                                         title={receipt.lendor}
@@ -79,14 +82,35 @@ const MyRequest = () => {
                                         <Meta
                                             avatar={
                                                 <Avatar
-                                                    size={45}
-                                                    src={makeBlockie(receipt.lendor)}
+                                                    size={47}
+                                                    src={checked}
                                                 />
                                             }
                                         />
                                     </Tooltip>
                                 ) : (
-                                    <></>
+                                    <>
+                                        {receipt?.lendor !==    
+                                        "0x0000000000000000000000000000000000000000" ? (
+                                            <Tooltip
+                                                className="my_request_tooltip"
+                                                title={receipt.lendor}
+                                            >
+                                                <Meta
+                                                    avatar={
+                                                        <Avatar
+                                                            size={45}
+                                                            src={makeBlockie(
+                                                                receipt.lendor
+                                                            )}
+                                                        />
+                                                    }
+                                                />
+                                            </Tooltip>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </>
                                 )}
                                 <div className="request-info-footer">
                                     <div className="request-info-meta-head">

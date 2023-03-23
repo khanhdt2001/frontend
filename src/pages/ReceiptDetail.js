@@ -6,6 +6,7 @@ import {
     convertToEth,
     vendorPayRountine,
     cutStringErr,
+    withdrawNft,
 } from "../function/Function";
 
 import { useState } from "react";
@@ -91,6 +92,8 @@ const ReceiptDetail = (props) => {
             await loginMetaMask(addressData);
         }
         setLoading(true);
+        console.log("receipt.paymentCount - 1 === receipt.paymentTime", receipt.paymentCount - 1 , receipt.paymentTime);
+
         try {
             const result = await vendorPayRountine(
                 receipt.receiptNumber,
@@ -108,6 +111,24 @@ const ReceiptDetail = (props) => {
                 setLoading(false);
                 openNotification("Tnx fail", cutStringErr(error.message));
             }, 3000);
+        }
+        if (receipt.paymentTime - 1 === receipt.paymentCount) {
+            try {
+                const result = await withdrawNft(
+                    receipt.receiptNumber,
+                    addressData || currentAddress
+                );
+                setTimeout(async () => {
+                    openNotification("Tnx success", result.transactionHash);
+                    setLoading(false);
+                }, 3000);
+            } catch (error) {
+                console.log(error);
+                setTimeout(() => {
+                    setLoading(false);
+                    openNotification("Tnx fail", cutStringErr(error.message));
+                }, 3000);
+            }
         }
     };
     return (

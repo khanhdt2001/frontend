@@ -11,6 +11,7 @@
     border-radius: 8px;
     border: 1px dashed rgb(217, 217, 217);
     margin-top: 16px;
+    min-width: 360px;
 }
 .receipt_detail_btn {
     display: flex;

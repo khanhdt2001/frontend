@@ -140,3 +140,10 @@ export const depositEth = async (token, myAccount) => {
     })
     return res;
 }
+
+export const withdrawNft = async (requestNumber, myAccount) => {
+    const res = await lending.methods.withdrawNFT(requestNumber).send({
+        from: myAccount
+    })
+    return res;
+}
