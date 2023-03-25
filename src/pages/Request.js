@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Input, Pagination, Card } from "antd";
+import { Input, Pagination, Card, Result } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import MyModalMakeOffer from "../components/Modal/MyModalMakeOffer";
 import "./css/requests.css";
@@ -14,25 +14,24 @@ const Request = () => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentDataLocal, setCurrentDataLocal] = useState()
-    const [currentDataWeb, setCurrentDataWeb] = useState()
+    const [currentDataLocal, setCurrentDataLocal] = useState();
+    const [currentDataWeb, setCurrentDataWeb] = useState();
     const onSearch = (value) => {
         setKeySearch(value);
         console.log(value);
-        showModal()
+        showModal();
     };
     const showModal = () => {
         setIsModalOpen(true);
-
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
     const handleOnclick = (dataLocal, dataWeb) => {
-        setCurrentDataLocal(dataLocal)
-        setCurrentDataWeb(dataWeb)
-        setIsModalOpen(true)
+        setCurrentDataLocal(dataLocal);
+        setCurrentDataWeb(dataWeb);
+        setIsModalOpen(true);
     };
     useEffect(() => {
         const GetRequests = async () => {
@@ -85,7 +84,10 @@ const Request = () => {
                                 hoverable
                                 style={{ width: 220 }}
                                 onClick={() => {
-                                    handleOnclick(data.receipts[index], metadata[index]);
+                                    handleOnclick(
+                                        data.receipts[index],
+                                        metadata[index]
+                                    );
                                 }}
                                 cover={
                                     <img
@@ -107,12 +109,13 @@ const Request = () => {
                                                 fontWeight: "bold",
                                             }}
                                         >
-                                            {metadata[index]?.contract.name}
-                                            #{metadata[index]?.tokenId}
+                                            {metadata[index]?.contract.name}#
+                                            {metadata[index]?.tokenId}
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">
-                                        Offers: {data?.offer[index].offer.length}
+                                        Offers:{" "}
+                                        {data?.offer[index].offer.length}
                                     </div>
                                 </div>
                             </Card>
@@ -120,16 +123,25 @@ const Request = () => {
                     ))}
                 </ul>
             </div>
-            <div className="request-footer">
-                <Pagination current={page} pageSize={8} total={total} />
-            </div>
+            {data?.receipts?.length === 0 ? (
+                <Result
+                    className="my_result_404"
+                    status="404"
+                    subTitle="Sorry, there are no requests at the moment."
+                />
+            ) : (
+                <div className="request-footer">
+                    <Pagination current={page} pageSize={8} total={total} />
+                </div>
+            )}
+
             <MyModalMakeOffer
                 data={{
                     isModalOpen,
                     handleCancel,
                     currentDataLocal,
                     SetIsLoading,
-                    currentDataWeb
+                    currentDataWeb,
                 }}
             ></MyModalMakeOffer>
         </div>

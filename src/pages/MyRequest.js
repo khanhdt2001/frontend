@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Pagination, Card, Tooltip, Avatar } from "antd";
+import { Pagination, Card, Tooltip, Avatar, Result } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import { AddressContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
@@ -90,7 +90,7 @@ const MyRequest = () => {
                                     </Tooltip>
                                 ) : (
                                     <>
-                                        {receipt?.lendor !==    
+                                        {receipt?.lendor !==
                                         "0x0000000000000000000000000000000000000000" ? (
                                             <Tooltip
                                                 className="my_request_tooltip"
@@ -137,9 +137,17 @@ const MyRequest = () => {
                     ))}
                 </ul>
             </div>
-            <div className="request-footer">
-                <Pagination defaultCurrent={1} pageSize={8} total={total} />
-            </div>
+            {data?.receipts?.length === 0 ? (
+                <Result
+                    className="my_result_404"
+                    status="404"
+                    subTitle="Sorry, there are no requests at the moment."
+                />
+            ) : (
+                <div className="request-footer">
+                    <Pagination current={page} pageSize={8} total={total} />
+                </div>
+            )}
         </div>
     );
 };

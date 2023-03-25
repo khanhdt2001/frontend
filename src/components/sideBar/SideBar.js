@@ -51,7 +51,7 @@ const items = [
                 <PaperClipOutlined style={{ fontSize: "20px" }} />
             ),
             getItem(
-               <NavLink to={"/vendor-profile"} style={{ fontSize: "16px", color:"white" }}>
+               <NavLink to={"/my-offer"} style={{ fontSize: "16px", color:"white" }}>
                    My Offer
                </NavLink>,
                "5",

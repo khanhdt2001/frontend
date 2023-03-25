@@ -50,3 +50,7 @@
     margin-bottom: 12px;
     margin-right: 12px;
 }
+.my_result_404 {
+   position: sticky;
+    top: 125px;
+}
