@@ -7,11 +7,12 @@ import axios from "axios";
 import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest";
 import {alchemy} from "../function/Function"
 import "./css/Market.css";
+import verified from "../assets/picture/verified.png"
 
 const { Meta } = Card;
-
 const Market = () => {
     const [NFTInfo, SetNFTInfo] = useState([]);
+    const [dataNFT, setData] = useState([])
     const [isLoading, SetIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
@@ -33,15 +34,13 @@ const Market = () => {
                 async (response) => {
                     console.log(response);
                     const dataLocal = response.data.nfts;
+                    setData(dataLocal);
                     const data =
                         (await Promise.all(
                             dataLocal.map((nft) =>
                                 alchemy.nft.getContractMetadata(nft.webAddress)
                             )
                         )) || [];
-                    // for (let i = 0; i < data.length; i++) {
-                    //     data[i].localAddress = dataLocal[i].localAddress
-                    // }
                     SetNFTInfo(data);
                     SetIsLoading(false);
                 },
@@ -57,14 +56,14 @@ const Market = () => {
     }, [isLoading]);
     return (
         <ul className="market__list ">
-            {NFTInfo?.map((nftData) => (
-                <li className="market__item" key={nftData?.address}>
+            {dataNFT?.map((nftData, index) => (
+                <li className="market__item" key={nftData._id}>
                     <Card className="market_li_card" hoverable>
                         <Meta
                             avatar={
                                 <Avatar
                                     size={64}
-                                    src={nftData?.openSea.imageUrl}
+                                    src={NFTInfo[index]?.openSea.imageUrl}
                                 />
                             }
                         />
@@ -78,12 +77,12 @@ const Market = () => {
                                         fontWeight: "bold"
                                     }}
                                 >
-                                    {nftData?.name}
-                                    <CheckCircleOutlined
-                                        style={{
-                                            fontSize: "14px",
-                                            color: "#00a186",
-                                        }}
+                                    {NFTInfo[index]?.name}
+                                    <Meta 
+                                        className="market_description_checked"
+                                        avatar={
+                                            <Avatar size={24} src={verified} />
+                                        }
                                     />
                                 </p>
                             </Row>
@@ -93,7 +92,7 @@ const Market = () => {
                                     <p style={{ display: "inline" }}>
                                         NFT in collection:{" "}
                                     </p>
-                                    {nftData?.totalSupply}
+                                    {NFTInfo[index]?.totalSupply}
                                 </Col>
                                 <Col>in market</Col>
                             </Row>
@@ -104,7 +103,7 @@ const Market = () => {
                             type="primary"
                             className="market_li_btn"
                             onClick={() => {
-                                showModal(nftData?.address);
+                                showModal(nftData?.webAddress);
                             }}
                         >
                             <DollarCircleOutlined />

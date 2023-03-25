@@ -31,7 +31,7 @@ const MyRequest = () => {
                     console.log(response.data);
                     setTotal(response.data.total);
                     const result = await Promise.all(
-                        response.data.receipts.map((item, index) =>
+                        response.data.receipts.map((item) =>
                             alchemy.nft.getNftMetadata(
                                 item.NFTAddress,
                                 item.tokenId
@@ -77,7 +77,7 @@ const MyRequest = () => {
                                     "0x0000000000000000000000000000000000000000" ? (
                                     <Tooltip
                                         className="my_request_tooltip"
-                                        title={receipt.lendor}
+                                        title="Done"
                                     >
                                         <Meta
                                             avatar={
