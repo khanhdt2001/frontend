@@ -20,4 +20,19 @@
 .offers_container_checked {
     position: absolute;
     right: 583px;
+    top: 20px;
+}
+.offers_container_step {
+    margin-top: 30px;
+    width: 90%;
+}
+.my_offer_close_btn {
+    color: #808080cc;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    border: unset;
 }

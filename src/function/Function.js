@@ -35,13 +35,13 @@ export const convertIpfs = (string) => {
     return "error";
 };
 
-export const getOwnerNft = async (nftaddress, tokenId, myAccount) => {
-    const sample = new web3.eth.Contract(nftAbi, nftaddress);
-    const res = await sample.methods.ownerOf(tokenId).call({
-        from: myAccount,
-    });
-    return res;
-};
+// export const getOwnerNft = async (nftaddress, tokenId, myAccount) => {
+//     const sample = new web3.eth.Contract(nftAbi, nftaddress);
+//     const res = await sample.methods.ownerOf(tokenId).call({
+//         from: myAccount,
+//     });
+//     return res;
+// };
 export const cutStringErr = (message) => {
     if (message) {
         const cutString = message.replace(
@@ -138,14 +138,22 @@ export const withdrawEth = async (token, myAccount) => {
 export const depositEth = async (token, myAccount) => {
     const res = await lending.methods.depositEth().send({
         from: myAccount,
-        value: token
-    })
+        value: token,
+    });
     return res;
-}
+};
 
 export const withdrawNft = async (requestNumber, myAccount) => {
     const res = await lending.methods.withdrawNFT(requestNumber).send({
-        from: myAccount
-    })
+        from: myAccount,
+    });
     return res;
-}
+};
+export const checkAbleToWithDrawNft = async (requestNumber, myAccount) => {
+    const res = await lending.methods
+        .checkAbleToWithDrawNft(requestNumber)
+        .call({
+            from:myAccount,
+        });
+    return res;
+};

@@ -71,10 +71,10 @@ const MyRequest = () => {
                                     />
                                 }
                             >
-                                {receipt?.paymentCount ===
-                                    receipt?.paymentTime &&
+                                {
                                 receipt?.lendor !==
-                                    "0x0000000000000000000000000000000000000000" ? (
+                                    "0x0000000000000000000000000000000000000000" &&
+                                receipt?.out === true ? (
                                     <Tooltip
                                         className="my_request_tooltip"
                                         title="Done"
@@ -91,7 +91,8 @@ const MyRequest = () => {
                                 ) : (
                                     <>
                                         {receipt?.lendor !==
-                                        "0x0000000000000000000000000000000000000000" ? (
+                                            "0x0000000000000000000000000000000000000000" &&
+                                        receipt?.out === false ? (
                                             <Tooltip
                                                 className="my_request_tooltip"
                                                 title={receipt.lendor}

@@ -9,6 +9,7 @@ import axios from "axios";
 import Web3 from "web3";
 import Web3Token from "web3-token";
 import MyDrawer from "../drawer/MyDrawer";
+import walletIcon from "../../assets/picture/wallet.png"
 const { ethereum } = window;
 const web3 = new Web3(Web3.givenProvider);
 const Header = () => {
@@ -43,10 +44,11 @@ const Header = () => {
                 <Row justify={"center"}>
                     <Button
                         type={currentAddress === "" ? "default" : "primary"}
-                        icon={<WalletOutlined style={{ fontSize: "20px" }} />}
+                        
                         onClick={connectWallet}
                         className="login-btn"
                     >
+                        <img className="wallet_icon" src={walletIcon}/>
                         {myShortString(currentAddress, 10) || "Connnect wallet"}
                     </Button>
                 </Row>

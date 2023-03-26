@@ -159,7 +159,7 @@ const ReceiptDetail = (props) => {
                     )}
                 </div>
                 <div className="receipt_detail_btn_right">
-                    {current > 0 && current - 1 === receipt.paymentCount ? (
+                    {current > 0 && current - 1 === receipt.paymentCount && receipt.out === false? (
                         <Button
                             type="primary"
                             loading={loading}

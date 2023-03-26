@@ -24,6 +24,7 @@ import {
 import makeBlockie from "ethereum-blockies-base64";
 import { AddressContext } from "../context/MyContext";
 import ReceiptDetail from "./ReceiptDetail";
+import ethPng from "../assets/picture/ethereum.png"
 const { Meta } = Card;
 const { ethereum } = window;
 
@@ -77,13 +78,14 @@ const NftDetail = () => {
                     response.data.receipt.tokenId
                 );
                 setMetaData(data);
-                if(response.data.receipt.tokenRate != "0" ) {
+                if (response.data.receipt.tokenRate != "0") {
                     setlendor(response.data.receipt.lendor);
 
                     const offerAmount = response.data.receipt.tokenAmount;
                     const rate = response.data.receipt.tokenRate;
                     const numberOfPayment = response.data.receipt.paymentTime;
-                    const interest = (offerAmount * rate) / 100 / numberOfPayment;
+                    const interest =
+                        (offerAmount * rate) / 100 / numberOfPayment;
                     const payOneTime = offerAmount / numberOfPayment + interest;
                     setPay1Time(payOneTime);
                     setpayAllTime(payOneTime * numberOfPayment);
@@ -189,21 +191,24 @@ const NftDetail = () => {
                         Pay all time: {convertToEth(payAllTime)} eth
                     </p>
                 </div>
-                {receipt?.tokenRate == "0" ? <div className="nft-detail-info-btn">
-                    <Button style={{ width: "80px" }} onClick={clearInfo}>
-                        Clear
-                    </Button>
-                    <Button
-                        loading={loading}
-                        disabled={disableSubmit}
-                        type="primary"
-                        style={{ minWidth: "80px" }}
-                        onClick={onConfirm}
-                    >
-                        Choose
-                    </Button>
-                </div>: <></>}
-                
+                {receipt?.tokenRate == "0" ? (
+                    <div className="nft-detail-info-btn">
+                        <Button style={{ width: "80px" }} onClick={clearInfo}>
+                            Clear
+                        </Button>
+                        <Button
+                            loading={loading}
+                            disabled={disableSubmit}
+                            type="primary"
+                            style={{ minWidth: "80px" }}
+                            onClick={onConfirm}
+                        >
+                            Choose
+                        </Button>
+                    </div>
+                ) : (
+                    <></>
+                )}
             </div>
             <div className="nft-detail-offer">
                 {receipt?.tokenRate === 0 ? (
@@ -227,12 +232,16 @@ const NftDetail = () => {
                                         />
                                     </Tooltip>
                                     <Row className="nft-detail-offer-description">
-                                        <Col>
+                                        <Col className="eth_container">
                                             {" "}
                                             ETH:{" "}
                                             {convertToEth(
                                                 data.offerTokenAmount
-                                            )}{" "}
+                                            )}
+                                            <img
+                                                className="eth_img"
+                                                src={ethPng}
+                                            />
                                         </Col>
                                         <Col> Rate: {data.offerTokenRate} </Col>
                                         <Col>
@@ -259,7 +268,9 @@ const NftDetail = () => {
                         ))}
                     </ul>
                 ) : (
-                    <ReceiptDetail data={{receipt, pay1Time, payAllTime, SetIsLoading}}/>
+                    <ReceiptDetail
+                        data={{ receipt, pay1Time, payAllTime, SetIsLoading }}
+                    />
                 )}
             </div>
         </div>

@@ -32,3 +32,10 @@
     /* position: absolute; */
     /* right: 360px; */
 }
+.eth_container {
+    display: flex;
+}
+.eth_img {
+    width: 23px;
+    margin-left: 5px;
+}
