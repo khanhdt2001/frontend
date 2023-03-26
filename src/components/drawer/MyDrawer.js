@@ -65,7 +65,7 @@ const MyDrawer = (props) => {
             setDisbtn(true);
             await depositToken(deposit)
             setTimeout(() => {
-                success(`You have received ${deposit} eth to contract`);
+                success(`You have deposit ${deposit} eth to contract`);
                 setDeposit();
                 setDisbtn(false);
             }, 2000);

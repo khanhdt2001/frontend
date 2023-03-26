@@ -279,8 +279,7 @@ const MyOffer = () => {
                                     </Col>
                                     <Col>Pay Time: {dataC.offerPayTime} </Col>
                                 </Row>
-                                {dataC?.checked == true &&
-                                receiptCurrent?.out === false ? (
+                                {dataC?.checked == true ? (
                                     <Meta
                                         className="offers_container_checked"
                                         avatar={
