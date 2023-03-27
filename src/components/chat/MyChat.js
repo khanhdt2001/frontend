@@ -29,7 +29,7 @@ const MyChat = () => {
     }
   }, [])
    useEffect(() => {
-      const q = query(collection(db, "messagesa"), orderBy("timestamp"));
+      const q = query(collection(db, "general"), orderBy("timestamp"));
       const unsubcribe = onSnapshot(q, (querySnapshot) => {
          let messages = [];
          querySnapshot.forEach((doc) => {
@@ -42,7 +42,7 @@ const MyChat = () => {
    }, []);
    const sendMsg = async () => {
       if (input) {
-         await addDoc(collection(db, "messagesa"), {
+         await addDoc(collection(db, "general"), {
             text: input,
             name: currentAddress,
             timestamp: serverTimestamp(),

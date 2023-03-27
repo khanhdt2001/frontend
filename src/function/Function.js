@@ -123,8 +123,6 @@ export const vendorPayRountine = async (requestNumber, ethValue, myAccount) => {
 
 export const getAddressBalance = async (account) => {
     const res = await lending.methods.getAddressBalance(account).call();
-    console.log("result", res);
-
     return res;
 };
 
