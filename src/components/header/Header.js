@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Header.css";
 import { Row, Col, Drawer } from "antd";
-import { WalletOutlined, FireOutlined } from "@ant-design/icons";
+import { FireOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { AddressContext } from "../../context/MyContext";
 import { myShortString } from "../../function/Function";
@@ -10,10 +10,12 @@ import Web3 from "web3";
 import Web3Token from "web3-token";
 import MyDrawer from "../drawer/MyDrawer";
 import walletIcon from "../../assets/picture/wallet.png";
+import { useNavigate } from "react-router-dom";
 const { ethereum } = window;
 const web3 = new Web3(Web3.givenProvider);
 const Header = () => {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
     const showDrawer = () => {
         setOpen(true);
     };
@@ -32,10 +34,14 @@ const Header = () => {
             showDrawer();
         }
     };
+    const goHome = () => {
+        console.log("click go home");
+        navigate(`/home`);
+    }
     return (
         <Row className="my-header-row">
-            <Col span={3}>
-                <Row justify={"center"} className="my-header-logo">
+            <Col span={3} className="my_header_logo">
+                <Row justify={"center"} className="my-header-logo" onClick={goHome}>
                     <FireOutlined style={{ fontSize: "30px" }} />
                     Ezio
                 </Row>

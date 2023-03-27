@@ -8,6 +8,8 @@ import makeBlockie from "ethereum-blockies-base64";
 import checked from "../assets/picture/checked.png";
 import "./css/myRequest.css";
 const { Meta } = Card;
+const { ethereum } = window;
+
 const MyRequest = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -15,13 +17,22 @@ const MyRequest = () => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
-    const { currentAddress } = React.useContext(AddressContext);
+    const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
     const handleOnclick = (receipt) => {
         console.log("receipt", receipt);
         navigate(`/receipt/${receipt.receiptNumber}`);
     };
     useEffect(() => {
+        
         const GetRequests = async () => {
+            var addressData;
+            if (!currentAddress) {
+                const listAccount = await ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                addressData = listAccount[0];
+                await loginMetaMask(addressData);
+            }
             await axios({
                 method: "get",
                 url: `http://localhost:5000/receipt/8/${page}/${currentAddress}`,

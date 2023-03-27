@@ -11,7 +11,7 @@ import { Layout, Menu } from "antd";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AddressContext } from "../../context/MyContext";
-
+import { useLocation } from 'react-router-dom';
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
     return {
@@ -26,14 +26,14 @@ const items = [
         <NavLink to={"/home"} style={{ fontSize: "16px", color:"white" }}>
             Home
         </NavLink>,
-        "1",
+        "/home",
         <ShopOutlined style={{ fontSize: "20px" }} />
     ),
     getItem(
         <NavLink to={"/requests"} style={{ fontSize: "16px", color:"white" }}>
             Request
         </NavLink>,
-        "2",
+        "/requests",
         <DashboardOutlined style={{ fontSize: "20px" }} />
     ),
     getItem(
@@ -47,14 +47,14 @@ const items = [
                 <NavLink to={"/my-request"} style={{ fontSize: "16px", color:"white" }}>
                     My Request
                 </NavLink>,
-                "4",
+                "/my-request",
                 <PaperClipOutlined style={{ fontSize: "20px" }} />
             ),
             getItem(
                <NavLink to={"/my-offer"} style={{ fontSize: "16px", color:"white" }}>
                    My Offer
                </NavLink>,
-               "5",
+               "/my-offer",
                <PieChartOutlined style={{ fontSize: "20px" }} />
            ),
         ]
@@ -65,14 +65,14 @@ const unConnectItem = [
         <NavLink to={"/home"} style={{ fontSize: "16px", color:"white" }}>
             Home
         </NavLink>,
-        "1",
+        "/home",
         <ShopOutlined style={{ fontSize: "20px" }} />
     ),
     getItem(
         <NavLink to={"/requests"} style={{ fontSize: "16px", color:"white" }}>
             Request
         </NavLink>,
-        "2",
+        "/requests",
         <DashboardOutlined style={{ fontSize: "20px" }} />
     ),
 ]
@@ -80,6 +80,7 @@ const unConnectItem = [
 const SideBar = () => {
     const { currentAddress } = React.useContext(AddressContext);
     const [collapsed, setCollapsed] = useState(false);
+    const { pathname } = useLocation();
     return (
         <Sider
             collapsible
@@ -90,7 +91,7 @@ const SideBar = () => {
         >
             <Menu
                 theme="dark"
-                defaultSelectedKeys={["1"]}
+                defaultSelectedKeys={pathname}
                 mode="inline"
                 items={currentAddress !== "" ? items : unConnectItem}
             ></Menu>

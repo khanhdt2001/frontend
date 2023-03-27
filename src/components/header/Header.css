@@ -12,6 +12,7 @@
     align-items: center;
     height: 100%;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .my-header-row .my-header-logo :first-child {
@@ -41,4 +42,7 @@
 .wallet_icon {
     width: 23px;
     margin-right: 5px;
+}
+.my_header_logo {
+    /* cursor: pointer; */
 }

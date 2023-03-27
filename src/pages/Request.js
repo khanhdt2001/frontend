@@ -10,17 +10,12 @@ const Request = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [data, setData] = useState([]);
     const [metadata, setMetadata] = useState([]);
-    const [keySearch, setKeySearch] = useState("");
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentDataLocal, setCurrentDataLocal] = useState();
     const [currentDataWeb, setCurrentDataWeb] = useState();
-    const onSearch = (value) => {
-        setKeySearch(value);
-        console.log(value);
-        showModal();
-    };
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -65,17 +60,7 @@ const Request = () => {
     }, [isLoading]);
     return (
         <div className="request-conatiner">
-            <div className="request-search">
-                <Search
-                    placeholder="Request"
-                    allowClear
-                    onSearch={onSearch}
-                    style={{
-                        width: 304,
-                    }}
-                    enterButton
-                />
-            </div>
+            
             <div className="request-body">
                 <ul className="request__list">
                     {data?.receipts?.map((receipt, index) => (
