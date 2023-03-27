@@ -1,0 +1,79 @@
+.sent_address {
+   float: right;
+   color: #ffffff;
+   flex-direction: row-reverse;
+
+   font-size: 0.9rem;
+   margin-top: unset !important;
+   line-height: 1rem;
+}
+.sent_address :last-child {
+   background: #1677ff;
+   border-top-left-radius: 9999px;
+   border-top-right-radius: 9999px;
+   border-bottom-left-radius: 9999px;
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+   padding-left: 0.75rem;
+   padding-right: 0.75rem;
+   max-width: 340px;
+   word-break: break-all;
+   margin: unset;
+
+
+}
+.received_address {
+   float: left;
+   color: #000000;
+}
+.received_address :last-child {
+   background: #e5e5ea;
+   border-top-left-radius: 9999px;
+   border-top-right-radius: 9999px;
+   border-bottom-right-radius: 9999px;
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+   padding-left: 0.75rem;
+   padding-right: 0.75rem;
+}
+.user_name {
+   position: absolute;
+   color: #4b5563;
+   font-size: 0.75rem;
+   line-height: 1rem;
+   margin-top: -2rem;
+}
+.message {
+   display: flex;
+   height: 12px;
+   position: relative;
+   margin: 1.6rem 0;
+   align-items: center;
+   border-top-left-radius: 9999px;
+   border-top-right-radius: 9999px;
+   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.send_msg_form button {
+   display: flex;
+   align-items: center;
+   width: auto;
+   height: auto;
+   width: 52px;
+}
+.main_message {
+   margin-top: 50px;
+}
+.send_icon {
+   width: 20px;
+   position: absolute;
+   left: 16px;
+}
+.main_text {
+   display: flex;
+   flex-direction: column;
+   padding: 10px;
+   height: 450px;
+   overflow-y: auto;
+   scroll-behavior: smooth;
+}

@@ -11,7 +11,7 @@ import {
     depositEth,
 } from "../../function/Function";
 import { AddressContext } from "../../context/MyContext";
-
+import MyChat from "../chat/MyChat";
 const formatter = (value) => <CountUp end={value} separator="," />;
 
 const MyDrawer = (props) => {
@@ -129,6 +129,9 @@ const MyDrawer = (props) => {
                         Deposit
                     </Button>
                 </Space.Compact>
+            </div>
+            <div className="drawer_msg">
+                <MyChat/>
             </div>
         </div>
     );
