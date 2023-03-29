@@ -28,8 +28,15 @@
 }
 .request__list li {
    /* margin-left: 15px; */
-   margin-right: 40px;
-   margin-bottom: 12px;
+   margin-right: 30px;
+   margin-bottom: 30px;
+}
+.request__list li .ant-card-body {
+   padding: 18px;
+}
+.request__list li .ant-card.ant-card-bordered {
+
+   box-shadow: 3px 7px 4px 6px #0000006e;
 }
 
 .request-info-footer {

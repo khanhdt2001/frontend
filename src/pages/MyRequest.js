@@ -80,6 +80,8 @@ const MyRequest = () => {
                               src={convertIpfs(
                                  metadata[index]?.rawMetadata.image
                               )}
+                              style={{height: 212}}
+
                            />
                         }
                      >

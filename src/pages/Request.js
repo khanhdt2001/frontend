@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Input, Pagination, Card, Result } from "antd";
+import { Input, Pagination, Card, Result, Image } from "antd";
 import { alchemy, convertIpfs } from "../function/Function";
 import MyModalMakeOffer from "../components/Modal/MyModalMakeOffer";
 import "./css/requests.css";
@@ -77,6 +77,8 @@ const Request = () => {
                               src={convertIpfs(
                                  metadata[index]?.rawMetadata.image
                               )}
+                              style={{height: 212}}
+
                            />
                         }
                      >
