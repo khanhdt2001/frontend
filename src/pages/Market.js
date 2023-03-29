@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Network, Alchemy } from "alchemy-sdk";
 import { Avatar, Card, Button, Row, Col } from "antd";
-import { DollarCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { DollarCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest";
 import {alchemy} from "../function/Function"
 import "./css/Market.css";
 import verified from "../assets/picture/verified.png"
-
+import ethLogo from "../assets/picture/ethereum.png"
 const { Meta } = Card;
 const Market = () => {
     const [NFTInfo, SetNFTInfo] = useState([]);
@@ -17,11 +16,9 @@ const Market = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
     const [currentNftAddress, setCurrentNftAddress] = useState("");
-    // const [currentLocalAddress, setCurrentLocalAddress] = useState("");
     const showModal = (address) => {
         setIsModalOpen(true);
         setCurrentNftAddress(address);
-        // setCurrentLocalAddress(localAddress);
     };
 
     const handleCancel = () => {
@@ -87,7 +84,9 @@ const Market = () => {
                                 </p>
                             </Row>
                             <Row className="market_description_content">
-                                <Col>fool price</Col>
+                                <Col className="col-with-img" >Fool price {nftData.price}
+                                        <img src={ethLogo} />
+                                </Col>
                                 <Col>
                                     <p style={{ display: "inline" }}>
                                         NFT in collection:{" "}

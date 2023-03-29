@@ -3,3 +3,7 @@
     bottom: 68px;
     right: -6px;
 }
+.ant-result-subtitle {
+    color: white !important;
+    font-size: 25px !important;
+}

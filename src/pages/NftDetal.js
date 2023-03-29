@@ -183,6 +183,7 @@ const NftDetail = () => {
                 <Image
                     width={200}
                     src={convertIpfs(metaData?.rawMetadata.image)}
+                    style={{height:212}}
                 />
                 <div className="nft-detail-script">
                     <p className="">Lendor: {lendor}</p>
