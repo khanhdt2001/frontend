@@ -1,6 +1,6 @@
 .offer-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .offer-list ul {
@@ -22,4 +22,7 @@
 
 .offer-list li {
     border-bottom: 1px solid black;
+}
+.request-form {
+    width: 230px;
 }

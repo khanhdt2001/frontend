@@ -10,7 +10,7 @@ import {
     notification,
     Steps,
     theme,
-    Result
+    Result,
 } from "antd";
 import checked from "../assets/picture/check.png";
 import check from "../assets/picture/checked.png";
@@ -189,8 +189,9 @@ const MyOffer = () => {
         setChoose(0);
         // clear checked
         const element = document.getElementsByClassName(
-            "ant-btn css-dev-only-do-not-override-diro6f ant-btn-primary ant-btn-lg li_btn"
+            "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
         );
+        console.log(element);
         for (const key in element) {
             if (Object.hasOwnProperty.call(element, key)) {
                 const a = element[key];
@@ -212,40 +213,40 @@ const MyOffer = () => {
                 />
             ) : (
                 <div className="offers_container_info">
-                <Steps
-                    current={current}
-                    direction="vertical"
-                    size="small"
-                    onChange={onChange}
-                    className="offers_container_step"
-                >
-                    {stepsData?.map((item, index) => (
-                        <Step
-                            key={index}
-                            title={item.title}
-                            description={item.description}
-                        ></Step>
-                    ))}
-                </Steps>
-                <Button className="my_offer_close_btn" onClick={cleanInfor}>
-                    X
-                </Button>
-                {ableToWithDraw === true && receiptCurrent?.out === false ? (
-                    <Button
-                        type="primary"
-                        className="my_offer_withdraw_btn"
-                        onClick={onWithDrawNft}
-                        loading={loading}
+                    <Steps
+                        current={current}
+                        direction="vertical"
+                        size="small"
+                        onChange={onChange}
+                        className="offers_container_step"
                     >
-                        Withdraw
+                        {stepsData?.map((item, index) => (
+                            <Step
+                                key={index}
+                                title={item.title}
+                                description={item.description}
+                            ></Step>
+                        ))}
+                    </Steps>
+                    <Button className="my_offer_close_btn" onClick={cleanInfor}>
+                        X
                     </Button>
-                ) : (
-                    <></>
-                )}
-            </div>
+                    {ableToWithDraw === true &&
+                    receiptCurrent?.out === false ? (
+                        <Button
+                            type="primary"
+                            className="my_offer_withdraw_btn"
+                            onClick={onWithDrawNft}
+                            loading={loading}
+                        >
+                            Withdraw
+                        </Button>
+                    ) : (
+                        <></>
+                    )}
+                </div>
             )}
 
-            
             <div className="nft-detail-offer">
                 <ul>
                     {data?.offers?.map((dataC, index) => (

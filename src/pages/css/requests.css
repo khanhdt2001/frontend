@@ -23,6 +23,7 @@
    list-style-type: none;
    /* margin-right: 35px; */
    margin-top: 30px;
+   padding-lenft: 96px;
    width: inherit;
    max-width: 1200px;
 }
@@ -32,7 +33,7 @@
    margin-bottom: 30px;
 }
 .request__list li .ant-card-body {
-   padding: 18px;
+   padding: 16px;
 }
 .request__list li .ant-card.ant-card-bordered {
 

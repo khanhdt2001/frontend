@@ -5,8 +5,7 @@
    flex-direction: column;
    list-style-type: none;
    margin: unset;
-   padding-top: 24px;
-   padding-right: 58px;
+padding: 50px 200px;
    background-size: cover;
    background-position: center center;
    background-repeat: repeat;

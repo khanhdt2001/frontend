@@ -114,7 +114,7 @@ const NftDetail = () => {
         setPay1Time(payOneTime);
         setpayAllTime(payOneTime * numberOfPayment);
         const element = document.getElementsByClassName(
-            "ant-btn css-dev-only-do-not-override-diro6f ant-btn-primary ant-btn-lg li_btn"
+            "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
         );
         console.log("element", element);
         for (const key in element) {
@@ -131,7 +131,7 @@ const NftDetail = () => {
         setPay1Time(0);
         setpayAllTime(0);
         const element = document.getElementsByClassName(
-            "ant-btn css-dev-only-do-not-override-diro6f ant-btn-primary ant-btn-lg li_btn"
+            "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
         );
         console.log("element", element);
         for (const key in element) {

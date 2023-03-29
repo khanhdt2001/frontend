@@ -7,14 +7,24 @@
     text-align: center;
     color: rgba(0, 0, 0, 0.45);
     /* background-color: ; */
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: rgb(238 226 226 / 68%);
     border-radius: 8px;
     border: 1px dashed rgb(217, 217, 217);
     margin-top: 16px;
-    min-width: 360px;
+    min-width: 380px;
 }
 .receipt_detail_btn {
     display: flex;
     margin-top: 24px;
     justify-content: space-between;
+}
+.ant-steps-item-icon {
+    /* background-color: rgb(241 236 236 / 75%) !important; */
+}
+.ant-steps-item-title {
+    color: white !important;
+}
+:where(.css-dev-only-do-not-override-1ttravq).ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+    background-color: rgb(241 236 236 / 75%) !important;
+
 }

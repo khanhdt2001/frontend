@@ -1,3 +1,14 @@
 .my-side-bar{
     min-height: 93vh;
+    background-color: rebeccapurple;
+    font-family: 'Poppins', sans-serif !important;
+}
+.ant-menu.ant-menu-root{
+    background-color: #001429;
+}
+.ant-layout-sider-children{
+    background-color: #001429;
+}
+:where(.css-dev-only-do-not-override-1ttravq).ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    background: #001429;
 }
