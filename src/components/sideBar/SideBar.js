@@ -23,7 +23,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
     getItem(
-        <NavLink to={"/home"} style={{ fontSize: "16px", color:"white" }}>
+        <NavLink to={"/home"} style={{ fontSize: "16px", color:"white", fontFamily: 'Poppins' }}>
             Home
         </NavLink>,
         "/home",
