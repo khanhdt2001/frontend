@@ -6,6 +6,7 @@ function App() {
             theme={{
                 token: {
                     fontFamily: "Poppins",
+                    fontWeightStrong: 500,
                 },
             }}
         >
