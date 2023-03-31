@@ -305,7 +305,7 @@ const MyModalMakeOffer = (props) => {
 
                            if ((days/value) < 7) {
                               return Promise.reject(
-                                 `aaaaaaaaaaaa`
+                                 `Invalid number of payment`
                               );
                            }
                            return Promise.resolve();
