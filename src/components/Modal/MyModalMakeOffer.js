@@ -25,6 +25,7 @@ const MyModalMakeOffer = (props) => {
       SetIsLoading,
       currentDataWeb,
    } = props.data;
+   console.log("currentDataWeb", currentDataWeb);
    const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
    const [receipt, setReceipt] = useState([]);
    const [form] = Form.useForm();
@@ -46,9 +47,8 @@ const MyModalMakeOffer = (props) => {
             console.log(error);
          }
       );
-   }
+   };
    useEffect(() => {
-      
       if (isModalOpen) {
          getData();
       }
@@ -64,14 +64,14 @@ const MyModalMakeOffer = (props) => {
       form.submit();
    };
    const onFinish = async () => {
-      var addressData
+      var addressData;
       if (!currentAddress) {
          const listAccount = await ethereum.request({
-             method: "eth_requestAccounts",
+            method: "eth_requestAccounts",
          });
          addressData = listAccount[0];
          await loginMetaMask(addressData);
-     }
+      }
       setLoading(true);
       const offerAmount = form.getFieldValue("Offer amount");
       const rate = form.getFieldValue("Rate");
@@ -84,14 +84,14 @@ const MyModalMakeOffer = (props) => {
             days,
             numberOfPayment,
             offerAmount,
-            addressData||currentAddress
+            addressData || currentAddress
          );
-         setTimeout(async() => {
+         setTimeout(async () => {
             openNotification("Tnx success", result.transactionHash);
             setLoading(false);
             SetIsLoading(true);
             setDisableSubmit(true);
-            await getData()
+            await getData();
          }, 3000);
       } catch (error) {
          setTimeout(() => {
@@ -201,6 +201,22 @@ const MyModalMakeOffer = (props) => {
                      {
                         required: true,
                      },
+                     {
+                        validator: (rule, value) => {
+                           if (
+                              value <
+                              currentDataWeb.contract.openSea.floorPrice / 3
+                           ) {
+                              return Promise.reject(
+                                 `Value must be at least ${
+                                    currentDataWeb.contract.openSea.floorPrice /
+                                    3
+                                 } eth`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
+                     },
                   ]}
                >
                   <Input
@@ -221,6 +237,16 @@ const MyModalMakeOffer = (props) => {
                      {
                         required: true,
                      },
+                     {
+                        validator: (rule, value) => {
+                           if (value > 22) {
+                              return Promise.reject(
+                                 `Rate must not be greater than 22%`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
+                     },
                   ]}
                >
                   <Input
@@ -240,6 +266,16 @@ const MyModalMakeOffer = (props) => {
                   rules={[
                      {
                         required: true,
+                     },
+                     {
+                        validator: (rule, value) => {
+                           if (value > 29 || value < 7) {
+                              return Promise.reject(
+                                 `Days must be in between 7 days and 29 days`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
                      },
                   ]}
                >
@@ -262,6 +298,18 @@ const MyModalMakeOffer = (props) => {
                   rules={[
                      {
                         required: true,
+                     },
+                     {
+                        validator: (rule, value) => {
+                           const days = form.getFieldValue("Days");
+
+                           if ((days/value) < 7) {
+                              return Promise.reject(
+                                 `aaaaaaaaaaaa`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
                      },
                   ]}
                >
