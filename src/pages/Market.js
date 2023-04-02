@@ -4,14 +4,14 @@ import { DollarCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 import MyModalMakeRequest from "../components/Modal/MyModalMakeRequest";
-import {alchemy} from "../function/Function"
+import { alchemy, sliceString } from "../function/Function";
 import "./css/Market.css";
-import verified from "../assets/picture/verified.png"
-import ethLogo from "../assets/picture/ethereum.png"
+import verified from "../assets/picture/verified.png";
+import ethLogo from "../assets/picture/ethereum.png";
 const { Meta } = Card;
 const Market = () => {
     const [NFTInfo, SetNFTInfo] = useState([]);
-    const [dataNFT, setData] = useState([])
+    const [dataNFT, setData] = useState([]);
     const [isLoading, SetIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
@@ -48,7 +48,6 @@ const Market = () => {
         };
         if (isLoading) {
             GetNftLocal();
-            
         }
     }, [isLoading]);
     return (
@@ -71,11 +70,11 @@ const Market = () => {
                                         display: "inline-flex",
                                         height: 0,
                                         lineHeight: 0,
-                                        fontWeight: "bold"
+                                        fontWeight: "bold",
                                     }}
                                 >
                                     {NFTInfo[index]?.name}
-                                    <Meta 
+                                    <Meta
                                         className="market_description_checked"
                                         avatar={
                                             <Avatar size={24} src={verified} />
@@ -84,8 +83,9 @@ const Market = () => {
                                 </p>
                             </Row>
                             <Row className="market_description_content">
-                                <Col className="col-with-img" >Fool price {nftData.price}
-                                        <img src={ethLogo} />
+                                <Col className="col-with-img">
+                                    Fool price {nftData.price}
+                                    <img src={ethLogo} />
                                 </Col>
                                 <Col>
                                     <p style={{ display: "inline" }}>
@@ -93,7 +93,11 @@ const Market = () => {
                                     </p>
                                     {NFTInfo[index]?.totalSupply}
                                 </Col>
-                                <Col>in market</Col>
+                                <Col className="col-with-img">
+                                    Minimum to borrow{" "}
+                                    {sliceString(nftData.price / 3)}
+                                    <img src={ethLogo} />
+                                </Col>
                             </Row>
                         </Row>
 

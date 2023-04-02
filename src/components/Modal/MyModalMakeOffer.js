@@ -217,6 +217,22 @@ const MyModalMakeOffer = (props) => {
                            return Promise.resolve();
                         },
                      },
+                     {
+                        validator: (rule, value) => {
+                           if (
+                              value >
+                              currentDataWeb.contract.openSea.floorPrice / 2
+                           ) {
+                              return Promise.reject(
+                                 `Value should not be at geater ${
+                                    currentDataWeb.contract.openSea.floorPrice /
+                                    2
+                                 } eth`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
+                     },
                   ]}
                >
                   <Input

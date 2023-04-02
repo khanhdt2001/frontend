@@ -19,7 +19,10 @@ export const myShortString = (message, number) => {
     }
     return response;
 };
-
+export const sliceString = (message) => {
+    let result = message.toString().slice(0, 4);
+    return result
+}
 const settings = {
     apiKey: "-C7_ur_4s6R0oUnBNGi4qB3XWfv-HsFR",
     network: Network.ETH_MAINNET,

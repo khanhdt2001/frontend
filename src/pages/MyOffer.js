@@ -81,18 +81,19 @@ const MyOffer = () => {
             );
             setTimeout(async () => {
                 openNotification("Tnx success", res.transactionHash);
-                setLoading(false);
+                setLoading(true);
             }, 3000);
         } catch (error) {
             console.log(error);
             setTimeout(() => {
-                setLoading(false);
                 openNotification("Tnx fail", cutStringErr(error.message));
             }, 3000);
         }
     };
     const setUpData = async (index) => {
         const receipt = data.receipts[index]?.receipt;
+        setAbleToWithDraw(false);
+
         setReceipt(receipt);
         console.log("receipt", receipt);
         for (let i = receipt?.paymentTime; i >= 0; i--) {
@@ -117,13 +118,11 @@ const MyOffer = () => {
             };
             stepss.push(day);
         }
-        console.log("stepss", stepss);
         setStepsData(stepss);
         const able = await checkAbleToWithDrawNft(
             receipt?.receiptNumber,
             currentAddress
         );
-        console.log(able);
         if (able) {
             setAbleToWithDraw(true);
         }
@@ -192,7 +191,6 @@ const MyOffer = () => {
         const element = document.getElementsByClassName(
             // "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
             "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
-            
         );
         console.log(element);
         for (const key in element) {

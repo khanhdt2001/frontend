@@ -50,6 +50,7 @@ const Request = () => {
                             )
                         )
                     );
+                    console.log("rresulte", result);
                     setMetadata(result);
                     SetIsLoading(false);
                 },
