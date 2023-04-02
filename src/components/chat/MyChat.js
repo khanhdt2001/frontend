@@ -25,7 +25,7 @@ const MyChat = () => {
     const chs = [
         {
             label: `General`,
-            value: 'general',
+            value: "general",
         },
     ];
     const handleChange = (value) => {
@@ -43,6 +43,16 @@ const MyChat = () => {
                         label: `Channel: ${ch.name}`,
                         value: ch.name,
                     };
+
+                    if (
+                        ch.access.length !== 0 &&
+                        (ch.access[0].toLowerCase() !== currentAddress &&
+                            ch.access[1].toLowerCase() !== currentAddress)
+                    ) {
+                        console.log(ch);
+                        return;
+                    }
+
                     chs.push(data);
                 });
                 setChannel(chs);
