@@ -17,7 +17,7 @@
    padding-left: 0.75rem;
    padding-right: 0.75rem;
    max-width: 340px;
-   word-break: break-all;
+   word-break: break-word;
    margin: unset;
 
 
@@ -41,18 +41,18 @@
    color: #4b5563;
    font-size: 0.75rem;
    line-height: 1rem;
-   margin-top: -2.2rem;
+   top: -10px;
+   /* margin-top: -2.2rem;
+   margin-bottom: 2.3rem; */
 }
 .message {
    display: flex;
-   height: 12px;
    position: relative;
-   margin: 1.9rem 0;
+   margin: 0.6rem 0;
    align-items: center;
    border-top-left-radius: 9999px;
    border-top-right-radius: 9999px;
-   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
 }
 .send_msg_form button {
    display: flex;
@@ -76,4 +76,7 @@
    height: 450px;
    overflow-y: auto;
    scroll-behavior: smooth;
+}
+.search_channel {
+   margin-bottom: 12px;
 }
