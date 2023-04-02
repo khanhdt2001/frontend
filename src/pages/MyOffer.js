@@ -132,7 +132,8 @@ const MyOffer = () => {
         setChoose(index);
         // clear checked
         const element = document.getElementsByClassName(
-            "ant-btn css-dev-only-do-not-override-diro6f ant-btn-primary ant-btn-lg li_btn"
+            // "ant-btn css-dev-only-do-not-override-diro6f ant-btn-primary ant-btn-lg li_btn"
+            "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
         );
         for (const key in element) {
             if (Object.hasOwnProperty.call(element, key)) {
@@ -189,7 +190,9 @@ const MyOffer = () => {
         setChoose(0);
         // clear checked
         const element = document.getElementsByClassName(
-            "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
+            // "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
+            "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
+            
         );
         console.log(element);
         for (const key in element) {

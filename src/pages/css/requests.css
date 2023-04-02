@@ -52,8 +52,12 @@
 }
 
 .request-info-footer .request-info-meta-bottom {
+   /* display: flex; */
+   line-height: 16px;
 }
-
+.request-info-meta-bottom .request_info {
+   /* margin-left: 12px; */
+}
 .request-footer {
    position: fixed;
    bottom: 0;

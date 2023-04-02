@@ -103,8 +103,12 @@ const Request = () => {
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">
+                                    <div className="request_info">
+                                            Floor price: {metadata[index]?.contract?.openSea?.floorPrice} eth
+                                        </div>
                                         Offers:{" "}
                                         {data?.offer[index].offer.length}
+                                       
                                     </div>
                                 </div>
                             </Card>
