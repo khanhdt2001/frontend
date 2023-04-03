@@ -25,7 +25,7 @@ const MyModalMakeOffer = (props) => {
       SetIsLoading,
       currentDataWeb,
    } = props.data;
-   console.log("currentDataWeb", currentDataWeb);
+   // console.log("currentDataWeb", currentDataWeb);
    const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
    const [receipt, setReceipt] = useState([]);
    const [form] = Form.useForm();
@@ -40,7 +40,7 @@ const MyModalMakeOffer = (props) => {
          url: `http://localhost:5000/receipt/${currentDataLocal?.receiptNumber}`,
       }).then(
          async (response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setReceipt(response.data);
          },
          (error) => {

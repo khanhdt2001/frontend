@@ -30,7 +30,7 @@ const MyChat = () => {
     ];
     const handleChange = (value) => {
         setCurrentChannel(value);
-        console.log(`selected ${value}`);
+        // console.log(`selected ${value}`);
     };
     const getData = async () => {
         await axios({
@@ -49,7 +49,7 @@ const MyChat = () => {
                         (ch.access[0].toLowerCase() !== currentAddress &&
                             ch.access[1].toLowerCase() !== currentAddress)
                     ) {
-                        console.log(ch);
+                        // console.log(ch);
                         return;
                     }
 

@@ -92,7 +92,7 @@ const ReceiptDetail = (props) => {
             await loginMetaMask(addressData);
         }
         setLoading(true);
-        console.log("receipt.paymentCount - 1 === receipt.paymentTime", receipt.paymentCount - 1 , receipt.paymentTime);
+        // console.log("receipt.paymentCount - 1 === receipt.paymentTime", receipt.paymentCount - 1 , receipt.paymentTime);
 
         try {
             const result = await vendorPayRountine(

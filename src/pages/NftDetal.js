@@ -99,7 +99,6 @@ const NftDetail = () => {
     };
     useEffect(() => {
         if (isLoading) {
-            console.log("load data-=-----------------");
             getData();
         }
     }, [isLoading]);
@@ -117,7 +116,7 @@ const NftDetail = () => {
             // "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
             "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
         );
-        console.log("element", element);
+        // console.log("element", element);
         for (const key in element) {
             if (Object.hasOwnProperty.call(element, key)) {
                 const a = element[key];
@@ -135,7 +134,7 @@ const NftDetail = () => {
             "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
 
         );
-        console.log("element", element);
+        // console.log("element", element);
         for (const key in element) {
             if (Object.hasOwnProperty.call(element, key)) {
                 const a = element[key];
@@ -160,7 +159,7 @@ const NftDetail = () => {
                     selectOffer.offerNumber,
                     addressData || currentAddress
                 );
-                console.log("result", result);
+                // console.log("result", result);
                 setTimeout(async () => {
                     openNotification("Tnx success", result.transactionHash);
                     setLoading(false);

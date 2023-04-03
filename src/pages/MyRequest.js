@@ -19,7 +19,7 @@ const MyRequest = () => {
     const navigate = useNavigate();
     const { currentAddress, loginMetaMask } = React.useContext(AddressContext);
     const handleOnclick = (receipt) => {
-        console.log("receipt", receipt);
+        // console.log("receipt", receipt);
         navigate(`/receipt/${receipt.receiptNumber}`);
     };
     const onChangePagination = (newCurrent) => {
@@ -43,7 +43,7 @@ const MyRequest = () => {
             }).then(
                 async (response) => {
                     setData(response.data);
-                    console.log(response.data);
+                    // console.log(response.data);
                     setTotal(response.data.total);
                     const result = await Promise.all(
                         response.data.receipts.map((item) =>

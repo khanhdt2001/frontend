@@ -95,7 +95,7 @@ const MyOffer = () => {
         setAbleToWithDraw(false);
 
         setReceipt(receipt);
-        console.log("receipt", receipt);
+        // console.log("receipt", receipt);
         for (let i = receipt?.paymentTime; i >= 0; i--) {
             const second =
                 receipt?.deadLine -
@@ -192,7 +192,7 @@ const MyOffer = () => {
             // "ant-btn css-dev-only-do-not-override-1ttravq ant-btn-primary ant-btn-lg li_btn"
             "ant-btn css-dev-only-do-not-override-13f3vj5 ant-btn-primary ant-btn-lg li_btn"
         );
-        console.log(element);
+        // console.log(element);
         for (const key in element) {
             if (Object.hasOwnProperty.call(element, key)) {
                 const a = element[key];

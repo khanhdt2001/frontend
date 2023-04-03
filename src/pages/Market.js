@@ -29,7 +29,7 @@ const Market = () => {
         const GetNftLocal = async () => {
             await axios.get("http://localhost:5000/nfts").then(
                 async (response) => {
-                    console.log(response);
+                    // console.log(response);
                     const dataLocal = response.data.nfts;
                     setData(dataLocal);
                     const data =

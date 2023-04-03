@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Input, Pagination, Card, Result, Image } from "antd";
-import { alchemy, convertIpfs } from "../function/Function";
+import { Pagination, Card, Result } from "antd";
+import { alchemy, convertIpfs, convertToEth } from "../function/Function";
 import MyModalMakeOffer from "../components/Modal/MyModalMakeOffer";
 import "./css/requests.css";
-const { Search } = Input;
-const { Meta } = Card;
+
 const Request = () => {
     const [isLoading, SetIsLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -18,6 +17,15 @@ const Request = () => {
 
     const showModal = () => {
         setIsModalOpen(true);
+    };
+    const findMaxOffer = (arr) => {
+        let max = 0;
+        arr.forEach((offer) => {
+            if (offer.offerTokenAmount > max) {
+                max = offer.offerTokenAmount;
+            }
+        });
+        return convertToEth(max);
     };
     const onChangePagination = (newCurrent) => {
         SetIsLoading(true);
@@ -50,7 +58,7 @@ const Request = () => {
                             )
                         )
                     );
-                    console.log("rresulte", result);
+                    // console.log("rresulte", result);
                     setMetadata(result);
                     SetIsLoading(false);
                 },
@@ -104,12 +112,20 @@ const Request = () => {
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">
-                                    <div className="request_info">
-                                            Floor price: {metadata[index]?.contract?.openSea?.floorPrice} eth
+                                        <div className="request_info">
+                                            Highest offer:{" "}
+                                            {data?.offer[index].offer.length >
+                                            0 ? (
+                                                findMaxOffer(
+                                                    data?.offer[index].offer
+                                                )
+                                            ) : (
+                                                0
+                                            )}{" "}
+                                            eth
                                         </div>
                                         Offers:{" "}
                                         {data?.offer[index].offer.length}
-                                       
                                     </div>
                                 </div>
                             </Card>

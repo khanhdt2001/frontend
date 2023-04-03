@@ -73,7 +73,7 @@ const MyModalMakeRequest = (props) => {
             setDisableSubmit(true);
             openNotification("Tnx success", response.transactionHash);
 
-            console.log(response);
+            // console.log(response);
         } catch (error) {
             
             setLoading(false);

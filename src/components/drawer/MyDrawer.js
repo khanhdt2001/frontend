@@ -29,7 +29,7 @@ const MyDrawer = (props) => {
     };
     const withdraw = async (value) => {
         const target = convertoWei(value);
-        console.log("target", target);
+        // console.log("target", target);
         await withdrawEth(target, currentAddress);
         await getBalance();
     };
@@ -60,7 +60,7 @@ const MyDrawer = (props) => {
     };
 
     const onDeposit = async () => {
-        console.log("onDeposit");
+        // console.log("onDeposit");
         if (deposit > 0) {
             setDisbtn(true);
             await depositToken(deposit)

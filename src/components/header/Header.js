@@ -35,7 +35,7 @@ const Header = () => {
         }
     };
     const goHome = () => {
-        console.log("click go home");
+        // console.log("click go home");
         navigate(`/home`);
     }
     return (
