@@ -34,6 +34,7 @@
 }
 .request__list li .ant-card-body {
    padding: 16px;
+   min-height: 100px;
 }
 .request__list li .ant-card.ant-card-bordered {
 

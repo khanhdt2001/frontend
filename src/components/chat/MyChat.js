@@ -14,13 +14,12 @@ import MyMessage from "./MyMessage";
 import { db } from "../../function/Firebase";
 import axios from "axios";
 
-const MyChat = () => {
+const MyChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState();
     const { currentAddress } = React.useContext(AddressContext);
     const messageEl = useRef();
     const [channel, setChannel] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [currentChannle, setCurrentChannel] = useState();
     const chs = [
         {
@@ -28,6 +27,8 @@ const MyChat = () => {
             value: "general",
         },
     ];
+    const { open } = props.data;
+
     const handleChange = (value) => {
         setCurrentChannel(value);
         // console.log(`selected ${value}`);
@@ -62,7 +63,9 @@ const MyChat = () => {
             }
         );
     };
-
+    if (open) {
+        getData();
+    }
     useEffect(() => {
         if (messageEl) {
             messageEl.current.addEventListener("DOMNodeInserted", (event) => {
@@ -83,12 +86,10 @@ const MyChat = () => {
             });
             setMessages(messages);
         });
-        if (loading) {
-            getData();
-            setLoading(false);
-        }
+        
+           
         return () => unsubcribe();
-    }, [loading, currentChannle]);
+    }, [ currentChannle]);
 
     const sendMsg = async () => {
         if (input) {

@@ -113,15 +113,28 @@ const Request = () => {
                                     </div>
                                     <div className="request-info-meta-bottom">
                                         <div className="request_info">
-                                            Highest offer:{" "}
-                                            {data?.offer[index].offer.length >
-                                            0 ? (
-                                                findMaxOffer(
-                                                    data?.offer[index].offer
-                                                )
-                                            ) : (
-                                                0
-                                            )}{" "}
+                                            {data?.offer[index].offer.length !==
+                                                0 && (
+                                                <>
+                                                    {" "}
+                                                    Highest offer:{" "}
+                                                    {data?.offer[index].offer
+                                                        .length > 0
+                                                        ? findMaxOffer(
+                                                              data?.offer[index]
+                                                                  .offer
+                                                          )
+                                                        : 0}{" "}
+                                                    eth
+                                                </>
+                                            )}
+                                        </div>
+                                        <div className="request_info">
+                                            Floor price:{" "}
+                                            {
+                                                metadata[index]?.contract
+                                                    ?.openSea?.floorPrice
+                                            }{" "}
                                             eth
                                         </div>
                                         Offers:{" "}

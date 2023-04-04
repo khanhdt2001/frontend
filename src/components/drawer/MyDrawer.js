@@ -131,7 +131,7 @@ const MyDrawer = (props) => {
                 </Space.Compact>
             </div>
             <div className="drawer_msg">
-                <MyChat/>
+                <MyChat data={{open}}/>
             </div>
         </div>
     );
