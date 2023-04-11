@@ -7,6 +7,7 @@ import {
     vendorPayRountine,
     cutStringErr,
     withdrawNft,
+    checkAbleToWithDrawNft,
 } from "../function/Function";
 
 import { useState } from "react";
@@ -21,12 +22,31 @@ const ReceiptDetail = (props) => {
     const [current, setCurrent] = useState(0);
     const [api, contextHolder] = notification.useNotification();
     const [loading, setLoading] = useState(false);
+    const [ableToWithDraw, setAbleToWithDraw] = useState(false);
 
-    const next = () => {
+    const next = async () => {
         setCurrent(current + 1);
+        const able = await checkAbleToWithDrawNft(
+            receipt?.receiptNumber,
+            currentAddress
+        );
+        if (able) {
+            setAbleToWithDraw(true);
+        } else {
+            setAbleToWithDraw(false);
+        }
     };
-    const prev = () => {
+    const prev = async () => {
         setCurrent(current - 1);
+        const able = await checkAbleToWithDrawNft(
+            receipt?.receiptNumber,
+            currentAddress
+        );
+        if (able) {
+            setAbleToWithDraw(true);
+        } else {
+            setAbleToWithDraw(false);
+        }
     };
 
     const stepss = [];
@@ -93,26 +113,35 @@ const ReceiptDetail = (props) => {
         }
         setLoading(true);
         // console.log("receipt.paymentCount - 1 === receipt.paymentTime", receipt.paymentCount - 1 , receipt.paymentTime);
-
-        try {
-            const result = await vendorPayRountine(
-                receipt.receiptNumber,
-                pay1Time.toString(),
-                addressData || currentAddress
-            );
-            setTimeout(async () => {
-                openNotification("Tnx success", result.transactionHash);
-                setLoading(false);
-                SetIsLoading(true);
-            }, 3000);
-        } catch (error) {
-            console.log(error);
-            setTimeout(() => {
-                setLoading(false);
-                openNotification("Tnx fail", cutStringErr(error.message));
-            }, 3000);
-        }
-        if (receipt.paymentTime - 1 === receipt.paymentCount) {
+        if (receipt.paymentTime !== receipt.paymentCount) {
+            try {
+                const result = await vendorPayRountine(
+                    receipt.receiptNumber,
+                    pay1Time.toString(),
+                    addressData || currentAddress
+                );
+                setTimeout(async () => {
+                    openNotification("Tnx success", result.transactionHash);
+                    setLoading(false);
+                    SetIsLoading(true);
+                    const able = await checkAbleToWithDrawNft(
+                        receipt?.receiptNumber,
+                        currentAddress
+                    );
+                    if (able) {
+                        setAbleToWithDraw(true);
+                    } else {
+                        setAbleToWithDraw(false);
+                    }
+                }, 3000);
+            } catch (error) {
+                console.log(error);
+                setTimeout(() => {
+                    setLoading(false);
+                    openNotification("Tnx fail", cutStringErr(error.message));
+                }, 3000);
+            }
+        } else {
             try {
                 const result = await withdrawNft(
                     receipt.receiptNumber,
@@ -121,11 +150,14 @@ const ReceiptDetail = (props) => {
                 setTimeout(async () => {
                     openNotification("Tnx success", result.transactionHash);
                     setLoading(false);
+                    SetIsLoading(true);
                 }, 3000);
             } catch (error) {
                 console.log(error);
                 setTimeout(() => {
                     setLoading(false);
+                    SetIsLoading(true);
+
                     openNotification("Tnx fail", cutStringErr(error.message));
                 }, 3000);
             }
@@ -159,7 +191,9 @@ const ReceiptDetail = (props) => {
                     )}
                 </div>
                 <div className="receipt_detail_btn_right">
-                    {current > 0 && current - 1 === receipt.paymentCount && receipt.out === false? (
+                    {current > 0 &&
+                    current - 1 === receipt.paymentCount &&
+                    receipt?.out === false ? (
                         <Button
                             type="primary"
                             loading={loading}
@@ -168,7 +202,21 @@ const ReceiptDetail = (props) => {
                             Submit
                         </Button>
                     ) : (
-                        <></>
+                        <>
+                            {ableToWithDraw === true &&
+                                receipt?.out === false && (
+                                    <>
+                                        {" "}
+                                        <Button
+                                            type="primary"
+                                            loading={loading}
+                                            onClick={onConfirm}
+                                        >
+                                            Withdraw
+                                        </Button>
+                                    </>
+                                )}
+                        </>
                     )}
                 </div>
             </div>

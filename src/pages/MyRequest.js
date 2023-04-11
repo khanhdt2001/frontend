@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Pagination, Card, Tooltip, Avatar, Result } from "antd";
-import { alchemy, convertIpfs } from "../function/Function";
+import { alchemy, convertIpfs, convertToEth } from "../function/Function";
 import { AddressContext } from "../context/MyContext";
 import { useNavigate } from "react-router-dom";
 import makeBlockie from "ethereum-blockies-base64";
@@ -21,6 +21,15 @@ const MyRequest = () => {
     const handleOnclick = (receipt) => {
         // console.log("receipt", receipt);
         navigate(`/receipt/${receipt.receiptNumber}`);
+    };
+    const findMaxOffer = (arr) => {
+        let max = 0;
+        arr.forEach((offer) => {
+            if (offer.offerTokenAmount > max) {
+                max = offer.offerTokenAmount;
+            }
+        });
+        return convertToEth(max);
     };
     const onChangePagination = (newCurrent) => {
         SetIsLoading(true);
@@ -144,6 +153,31 @@ const MyRequest = () => {
                                         </p>
                                     </div>
                                     <div className="request-info-meta-bottom">
+                                        <div className="request_info">
+                                            {data?.offer[index].offer.length !==
+                                                0 && (
+                                                <>
+                                                    {" "}
+                                                    Highest offer:{" "}
+                                                    {data?.offer[index].offer
+                                                        .length > 0
+                                                        ? findMaxOffer(
+                                                              data?.offer[index]
+                                                                  .offer
+                                                          )
+                                                        : 0}{" "}
+                                                    eth
+                                                </>
+                                            )}
+                                        </div>
+                                        <div className="request_info">
+                                            Floor price:{" "}
+                                            {
+                                                metadata[index]?.contract
+                                                    ?.openSea?.floorPrice
+                                            }{" "}
+                                            eth
+                                        </div>
                                         Offers:{" "}
                                         {data?.offer[index].offer.length}
                                     </div>

@@ -74,6 +74,8 @@ const MyOffer = () => {
         setCurrent(value);
     };
     const onWithDrawNft = async () => {
+        setLoading(true);
+
         try {
             const res = await withdrawNft(
                 receiptCurrent.receiptNumber,
@@ -81,12 +83,15 @@ const MyOffer = () => {
             );
             setTimeout(async () => {
                 openNotification("Tnx success", res.transactionHash);
-                setLoading(true);
+                setLoading(false);
+                SetIsLoading(true);
             }, 3000);
         } catch (error) {
             console.log(error);
             setTimeout(() => {
                 openNotification("Tnx fail", cutStringErr(error.message));
+                setLoading(false);
+
             }, 3000);
         }
     };
