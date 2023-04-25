@@ -121,7 +121,7 @@ const MyChat = (props) => {
                     />
                 </Space.Compact>
             </div>
-            <div className="main_text" ref={messageEl}>
+            <div className="main_text" ref={messageEl} data-testid="conversation">
                 {messages &&
                     messages.map((msg) => (
                         <MyMessage key={msg.id} message={msg} />
