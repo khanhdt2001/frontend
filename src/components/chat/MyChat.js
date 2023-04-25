@@ -63,15 +63,16 @@ const MyChat = (props) => {
             }
         );
     };
-    if (open) {
-        getData();
-    }
+   
     useEffect(() => {
         if (messageEl) {
             messageEl.current.addEventListener("DOMNodeInserted", (event) => {
                 const { currentTarget: target } = event;
                 target.scroll({ top: target.scrollHeight, behavior: "smooth" });
             });
+        }
+        if (open) {
+            getData();
         }
     }, []);
     useEffect(() => {
@@ -86,10 +87,12 @@ const MyChat = (props) => {
             });
             setMessages(messages);
         });
-        
+        if (open) {
+            getData();
+        }
            
         return () => unsubcribe();
-    }, [ currentChannle]);
+    }, [ currentChannle ]);
 
     const sendMsg = async () => {
         if (input) {
