@@ -263,6 +263,16 @@ const MyModalMakeOffer = (props) => {
                            return Promise.resolve();
                         },
                      },
+                     {
+                        validator: (rule, value) => {
+                           if (value < 1) {
+                              return Promise.reject(
+                                 `Rate must not be smaller than 1%`
+                              );
+                           }
+                           return Promise.resolve();
+                        },
+                     },
                   ]}
                >
                   <Input
